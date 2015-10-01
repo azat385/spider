@@ -19,10 +19,13 @@ class wrx():
 	first10wordsResponse = "\x04\x03\x00\x00\x00\x0A\xC5\x98"
         pass
 
+statistics = {}
 
 
 class FingerProtocol(protocol.Protocol):
     i = 0
+    global statistics
+
     def connectionMade(self):
 	reactor.callLater(args.time, self.closeConnection)
 	self.i = 0
@@ -60,8 +63,9 @@ class FingerProtocol(protocol.Protocol):
 
     def closeConnection(self):
 	#print "close connection: ", self.factory.user, self.i
-	#self.transport.loseConnection()
-	reactor.stop()
+	statistics.update({self.factory.user: self.i})
+	self.transport.loseConnection()
+	#reactor.stop()
 
 class FingerFactory(protocol.ClientFactory):
     protocol = FingerProtocol
@@ -73,22 +77,29 @@ class FingerFactory(protocol.ClientFactory):
         #print 'Lost connection.  Reason:', reason
 	pass
 
+def stopWithStats():
+        print "before stopping the reactor"
+
+        results = {}
+        for obj in gc.get_objects():
+                if isinstance(obj, FingerProtocol):
+                        results.update({obj.factory.user: obj.i})
+
+        #rList = results.values()
+        rList = statistics.values()
+	rCount = {x:rList.count(x) for x in rList}
+        #{17: 1, 4: 85, 5: 17)
+        for rKey in sorted(rCount, reverse=1):
+                print "RR cycles = {} same for {} clients".format(rKey,rCount[rKey])
+        reactor.stop()
+	print "stopping..."	
+
 users = ['azat', 'ruslan', 'qwert']
 for n in range(args.clients):
 	users.append("client{}".format(n))
 for u in users:
 	reactor.connectTCP("127.0.0.1",1079, FingerFactory(u))
+reactor.callLater(args.time+5, stopWithStats)
 reactor.run()
 
-print "after stopping the reactor"
-
-results = {}
-for obj in gc.get_objects():
-    if isinstance(obj, FingerProtocol):
-         results.update({obj.factory.user: obj.i})
-
-rList = results.values()
-rCount = {x:rList.count(x) for x in rList}
-#{17: 1, 4: 85, 5: 17)
-for rKey in sorted(rCount, reverse=1):
-	print "RR cycles = {} same for {} clients".format(rKey,rCount[rKey])
+print "the end"
