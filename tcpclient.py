@@ -2,6 +2,14 @@ from twisted.internet import protocol, reactor
 from twisted.protocols import basic
 from sys import stdout
 from random import randint
+import gc
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-t","--time", nargs="?",type=int, help="elapsed timein seconnds",default=20)
+parser.add_argument("-c","--clients", nargs="?",type=int, help="default 3+num clients",default=100)
+args = parser.parse_args()
+print "Starting {} clients in {} seconds".format(args.clients+3, args.time)
 
 class wrx():
         auth = "\xC0\x00\x06\x00\x14\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xE7\x48\xC2"
@@ -16,21 +24,21 @@ class wrx():
 class FingerProtocol(protocol.Protocol):
     i = 0
     def connectionMade(self):
-	reactor.callLater(60, self.closeConnection)
+	reactor.callLater(args.time, self.closeConnection)
 	self.i = 0
-	print "connection is made"
+	#print "connection is made"
         #self.transport.write("%s\r\n"%(self.factory.user))
         #self.transport.loseConnection()
 
     def dataReceived(self,data):
 	#stdout.write(data)
-	print "incomming request to '{}' data='{}' i={}".format(
-			self.factory.user, data, self.i)
+	#print "incomming request to '{}' data='{}' i={}".format(
+	#		self.factory.user, data, self.i)
 	if self.i==0:
 		self.transport.write(self.factory.user)
-		print "send:{}".format(self.factory.user)
+		#print "send:{}".format(self.factory.user)
 	if self.i==1:
-		print "do nothing"
+		#print "do nothing"
 		pass
 	if self.i>1:
 		#self.transport.write("{}".format(wrx.first10wordsResponse))
@@ -47,13 +55,13 @@ class FingerProtocol(protocol.Protocol):
 
     def sendResponse(self, message):
 	self.transport.write(message)
-	print "outgoing response from '{}' data='{}' i={}".format(
-				self.factory.user, message, self.i)
+	#print "outgoing response from '{}' data='{}' i={}".format(
+	#			self.factory.user, message, self.i)
 
     def closeConnection(self):
-	print "close connection: ", self.factory.user, self.i
-	self.transport.loseConnection()
-	#reactor.stop()
+	#print "close connection: ", self.factory.user, self.i
+	#self.transport.loseConnection()
+	reactor.stop()
 
 class FingerFactory(protocol.ClientFactory):
     protocol = FingerProtocol
@@ -62,12 +70,25 @@ class FingerFactory(protocol.ClientFactory):
 	self.user = user
 
     def clientConnectionLost(self, connector, reason):
-        print 'Lost connection.  Reason:', reason
-
+        #print 'Lost connection.  Reason:', reason
+	pass
 
 users = ['azat', 'ruslan', 'qwert']
-for n in range(1000):
+for n in range(args.clients):
 	users.append("client{}".format(n))
 for u in users:
 	reactor.connectTCP("127.0.0.1",1079, FingerFactory(u))
 reactor.run()
+
+print "after stopping the reactor"
+
+results = {}
+for obj in gc.get_objects():
+    if isinstance(obj, FingerProtocol):
+         results.update({obj.factory.user: obj.i})
+
+rList = results.values()
+rCount = {x:rList.count(x) for x in rList}
+#{17: 1, 4: 85, 5: 17)
+for rKey in sorted(rCount, reverse=1):
+	print "RR cycles = {} same for {} clients".format(rKey,rCount[rKey])
