@@ -1,15 +1,24 @@
 from twisted.internet import protocol, reactor
 from twisted.protocols import basic
+#from twisted.python import log
+#from twisted.logger import Logger
 from sys import stdout
 from random import randint
 import gc
 import argparse
+from datetime import datetime
+
+#log.startLogging(open('statistics.log', 'a'))
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-t","--time", nargs="?",type=int, help="elapsed timein seconnds",default=20)
 parser.add_argument("-c","--clients", nargs="?",type=int, help="default 3+num clients",default=100)
+parser.add_argument("-l","--loops", nargs="?",type=int, help="",default=1)
 args = parser.parse_args()
-print "Starting {} clients in {} seconds".format(args.clients+3, args.time)
+print "Starting {} clients in {} seconds for {} loops".format(args.clients+3, args.time, args.loops)
+
+#log.msg("Starting {} clients in {} seconds".format(args.clients+3, args.time))
 
 class wrx():
         auth = "\xC0\x00\x06\x00\x14\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xE7\x48\xC2"
@@ -49,7 +58,7 @@ class FingerProtocol(protocol.Protocol):
 		if self.factory.user=='ruslan':
 			delayTime = 0
 		else:
-			delayTime = randint(1,5)
+			delayTime = 0 #randint(1,5)
 		self.sendDelayedResponse(wrx.first10wordsResponse, delayTime)
 	self.i += 1
 
@@ -91,15 +100,34 @@ def stopWithStats():
         #{17: 1, 4: 85, 5: 17)
         for rKey in sorted(rCount, reverse=1):
                 print "RR cycles = {} same for {} clients".format(rKey,rCount[rKey])
+	if 0 in rCount:
+		zeroClient = rCount[0]
+	else:
+		zeroClient = 0
+	print "*"*60,"\nstatistics\n","-"*60,"\n", "average={}req/sec time={}\n{} zero clients of total {}".format(
+			sum(rCount)/args.time, args.time, 
+			zeroClient, sum(rCount.values()),
+			),"\n","*"*60
         reactor.stop()
-	print "stopping..."	
+	#log.msg("Stopping reactor now...")
+	print "stopping..."
+	f = open('stat.txt', 'a')
+	f.write("{}  average= {:6}req/sec time={:4}sec	{:5} zero clients of total {:<5}\n".format(
+			datetime.now(),
+                        int(sum(rCount)/args.time), args.time,
+                        zeroClient, sum(rCount.values()),
+                        ))
+	f.close()
 
-users = ['azat', 'ruslan', 'qwert']
-for n in range(args.clients):
-	users.append("client{}".format(n))
-for u in users:
-	reactor.connectTCP("127.0.0.1",1079, FingerFactory(u))
-reactor.callLater(args.time+5, stopWithStats)
-reactor.run()
+def mainLoop():
+	users = ['azat', 'ruslan', 'qwert']
+	for n in range(args.clients):
+		users.append("client{}".format(n))
+	for u in users:
+		reactor.connectTCP("127.0.0.1",1079, FingerFactory(u))
+	reactor.callLater(args.time+5, stopWithStats)
+	reactor.run()
+	print "the end loop"
 
-print "the end"
+#cant call reactor twice!
+mainLoop()

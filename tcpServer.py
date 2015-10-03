@@ -30,7 +30,7 @@ class SpiderProtocol(protocol.Protocol):
 	#reactor.callLater(30, self.closeConnection)
 
     def dataReceived(self, line):
-	print line, self.stage
+	#print line, self.stage
 	if self.stage == 1:
 		self.handleIMEIsimple(line)		
 		self.transport.write(wrx.authConfirm)
@@ -63,9 +63,9 @@ class SpiderProtocol(protocol.Protocol):
     def handleChat(self, message):
 	self.i += 1
 	if self.IMEI=='ruslan':
-		delay = 1
+		delay = 0
 	else:
-		delay = 5
+		delay = 0
 	self.planRequest(delay)
 	log.msg('Inc=%s from IMEI %s'%(self.getInc100(message), self.IMEI))
 	
