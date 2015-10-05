@@ -108,7 +108,7 @@ def stopWithStats():
 	else:
 		zeroClient = 0
 	print "*"*60,"\nstatistics\n","-"*60,"\n", "average={}req/sec time={}\n{} zero clients of total {}".format(
-			sum(rCount)/args.time, args.time, 
+			sum(rList)/args.time, args.time, 
 			zeroClient, sum(rCount.values()),
 			),"\n","*"*60
         reactor.stop()
@@ -117,7 +117,7 @@ def stopWithStats():
 	f = open('stat.txt', 'a')
 	f.write("{}  average= {:6}req/sec time={:4}sec	{:5} zero clients of total {:<5}\n".format(
 			datetime.now(),
-                        int(sum(rCount)/args.time), args.time,
+                        int(sum(rList)/args.time), args.time,
                         zeroClient, sum(rCount.values()),
                         ))
 	f.close()
