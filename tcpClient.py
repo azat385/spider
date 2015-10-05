@@ -15,8 +15,11 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-t","--time", nargs="?",type=int, help="elapsed timein seconnds",default=20)
 parser.add_argument("-c","--clients", nargs="?",type=int, help="default 3+num clients",default=100)
 parser.add_argument("-l","--loops", nargs="?",type=int, help="",default=1)
+parser.add_argument("-p","--port", nargs="?", type=int, help="port number",default=1079)
+parser.add_argument("-s","--host", type=str, help="server host name",default="127.0.0.1")
 args = parser.parse_args()
-print "Starting {} clients in {} seconds for {} loops".format(args.clients+3, args.time, args.loops)
+print "Starting {} clients in {} seconds connecting {}:{}".format(
+                        args.clients+3, args.time, args.host, args.port)
 
 #log.msg("Starting {} clients in {} seconds".format(args.clients+3, args.time))
 
@@ -124,7 +127,7 @@ def mainLoop():
 	for n in range(args.clients):
 		users.append("client{}".format(n))
 	for u in users:
-		reactor.connectTCP("127.0.0.1",1079, FingerFactory(u))
+		reactor.connectTCP(args.host, args.port, FingerFactory(u))
 	reactor.callLater(args.time+5, stopWithStats)
 	reactor.run()
 	print "the end loop"
