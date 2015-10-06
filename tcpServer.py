@@ -4,6 +4,17 @@ from twisted.internet import protocol, reactor
 from twisted.protocols import basic
 from random import randint
 from twisted.python import log
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-p","--port", nargs="?", type=int, help="port number",default=1079)
+parser.add_argument("-s","--host", type=str, help="server host name",default="127.0.0.1")
+parser.add_argument("-d","--delay", nargs="?",type=int, help="delay between request and reaponse (set 0) or min(set 2..100)",default=0)
+args = parser.parse_args()
+if args.delay == 1:
+        args.delay = 2
+print "Starting server on {} port wuth delay {}+/-2 sec".format(
+	args.port, args.delay)
 
 class wrx():
 	auth = "\xC0\x00\x06\x00\x14\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xE7\x48\xC2"
@@ -62,11 +73,12 @@ class SpiderProtocol(protocol.Protocol):
  
     def handleChat(self, message):
 	self.i += 1
-	if self.IMEI=='ruslan':
-		delay = 0
-	else:
-		delay = 0
-	self.planRequest(delay)
+        if args.delay==0:
+		delayTime = 0
+        else:
+                delayTime = randint(args.delay-2,args.delay+2)
+
+	self.planRequest(delayTime)
 	log.msg('Inc=%s from IMEI %s'%(self.getInc100(message), self.IMEI))
 	
     def getInc100(self, message):
@@ -97,5 +109,5 @@ class SpiderFactory(protocol.ServerFactory):
         return self.users.get(user, "No such user")
 
 userDict = {'moshes':'Happy' , 'azat':'Very happy', 'ruslan':'2 cildren'}
-reactor.listenTCP(1079, SpiderFactory(**userDict))
+reactor.listenTCP(args.port, SpiderFactory(**userDict))
 reactor.run()

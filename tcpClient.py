@@ -17,9 +17,12 @@ parser.add_argument("-c","--clients", nargs="?",type=int, help="default 3+num cl
 parser.add_argument("-l","--loops", nargs="?",type=int, help="",default=1)
 parser.add_argument("-p","--port", nargs="?", type=int, help="port number",default=1079)
 parser.add_argument("-s","--host", type=str, help="server host name",default="127.0.0.1")
+parser.add_argument("-d","--delay", nargs="?",type=int, help="delay between request and reaponse (set 0) or min(set 2..100)",default=0)
 args = parser.parse_args()
-print "Starting {} clients in {} seconds connecting {}:{}".format(
-                        args.clients+3, args.time, args.host, args.port)
+if args.delay == 1:
+	args.delay = 2
+print "Starting {} clients in {} seconds connecting {}:{} delay={}+/-2 sec".format(
+                        args.clients+3, args.time, args.host, args.port, args.delay)
 
 #log.msg("Starting {} clients in {} seconds".format(args.clients+3, args.time))
 
@@ -58,10 +61,14 @@ class FingerProtocol(protocol.Protocol):
 	if self.i>1:
 		#self.transport.write("{}".format(wrx.first10wordsResponse))
 		#print "send last10response"
-		if self.factory.user=='ruslan':
+		if args.delay==0:
 			delayTime = 0
 		else:
-			delayTime = 0 #randint(1,5)
+			delayTime = randint(args.delay-2,args.delay+2)
+		#if self.factory.user=='ruslan':
+		#	delayTime = 0
+		#else:
+		#	delayTime = 0 #randint(1,5)
 		self.sendDelayedResponse(wrx.first10wordsResponse, delayTime)
 	self.i += 1
 
