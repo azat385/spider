@@ -1,10 +1,12 @@
 # Read username, output from non-empty factory, drop connections
 
+from twisted.application import internet, service
 from twisted.internet import protocol, reactor
 from twisted.protocols import basic
 from random import randint
 from twisted.python import log
 import argparse
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-p","--port", nargs="?", type=int, help="port number",default=1079)
@@ -13,7 +15,7 @@ parser.add_argument("-d","--delay", nargs="?",type=int, help="delay between requ
 args = parser.parse_args()
 if args.delay == 1:
         args.delay = 2
-print "Starting server on {} port wuth delay {}+/-2 sec".format(
+print "Starting server on {} port with delay {}+/-2 sec".format(
 	args.port, args.delay)
 
 class wrx():
@@ -43,11 +45,14 @@ class SpiderProtocol(protocol.Protocol):
     def dataReceived(self, line):
 	#print line, self.stage
 	if self.stage == 1:
-		self.handleIMEIsimple(line)		
-		self.transport.write(wrx.authConfirm)
+		print "dataReceived:line:", line
+		self.handleIMEI(line)		
+		#self.transport.write(wrx.authConfirm)
 		self.stage = 2
-		self.planRequest(5)
+		self.planRequest(4, wrx.authConfirm)
+		self.planRequest(8, wrx.first10words)
 	else:
+		print "self.handleChat:line:",line
 		self.handleChat(line)
 
     def handleIMEIsimple(self, message):
@@ -55,20 +60,28 @@ class SpiderProtocol(protocol.Protocol):
         print 'get IMEI from wrxAuth {}'.format(self.IMEI)
 	#return self.IMEI
 
-    def handleIMEI(self, message):
+    def handleIMEI(self, data):
 	s = []
+	print "begin:handleIMEI:message:", data
 	try:
-		dataArray = [ord(d) for d in message]
+		print "handleIMEI:message:", data
+		dataArray = [ord(d) for d in data]
+		print "handleIMEI:dataArray:", dataArray
         	s.append(ord(data[5]))
+		print "handleIMEI:s1:", s
                 s.append(data[5+1:5+1+15])
+		print "handleIMEI:s2:", s
                 s.append(data[5+16:5+16+16])
+		print "handleIMEI:s3:", s
                 s.append(data[5+32:5+32+10])
+		print "handleIMEI:s4:", s
                 s.append(ord(data[67]))
+		print "handleIMEI:s5:", s
 	except:
-		pass
+		print "some error in wrx auth response decoding"
 		return
 	self.IMEI = s[1]
-	log.msg('get IMEI from wrxAuth {}'.format(self.IMEI))
+	print 'get IMEI from wrxAuth {}'.format(self.IMEI)
 	return self.IMEI
  
     def handleChat(self, message):
@@ -77,20 +90,22 @@ class SpiderProtocol(protocol.Protocol):
 		delayTime = 0
         else:
                 delayTime = randint(args.delay-2,args.delay+2)
-
-	self.planRequest(delayTime)
-	log.msg('Inc=%s from IMEI %s'%(self.getInc100(message), self.IMEI))
+	print 'Inc={} from IMEI {}'.format(self.getInc100(message), self.IMEI)
+	self.planRequest(delayTime, wrx.first10words)
+	#log.msg('Inc=%s from IMEI %s'%(self.getInc100(message), self.IMEI))
 	
     def getInc100(self, message):
 	try:
-		return ord(message[5])#in fact have to be 5-->18
+		return ord(message[18])#in fact have to be 5-->18
 	except:
 		return "raise ERROR here"
 
-    def planRequest(self, delayTime = 1):
-	reactor.callLater(delayTime, self.sendRequest, wrx.first10words)
+    def planRequest(self, delayTime = 1, message = wrx.first10words):
+	print "Plan request={} after {} sec IMEI={}".format(message, delayTime, self.IMEI)
+	reactor.callLater(delayTime, self.sendRequest, message)
 
     def sendRequest(self, request):
+	print "Send request={} IMEI={}".format(request, self.IMEI)
 	self.transport.write(request)
 
     def connectionLost(self, reason):
@@ -102,12 +117,51 @@ class SpiderProtocol(protocol.Protocol):
 class SpiderFactory(protocol.ServerFactory):
     protocol = SpiderProtocol
 
+    #def __init__(self, service):
+    #	self.service = service
     def __init__(self, **kwargs):
         self.users = kwargs
 
     def getUser(self, user):
         return self.users.get(user, "No such user")
 
+
 userDict = {'moshes':'Happy' , 'azat':'Very happy', 'ruslan':'2 cildren'}
 reactor.listenTCP(args.port, SpiderFactory(**userDict))
 reactor.run()
+
+""" for future
+
+class SpiderService(service.Service):
+    def __init__(self):
+	pass
+        #self.poetry_file = poetry_file
+
+    def startService(self):
+        service.Service.startService(self)
+	print "Starting service"
+        #self.poem = open(self.poetry_file).read()
+        #log.msg('loaded a poem from: %s' % (self.poetry_file,))
+
+
+
+# configuration parameters
+port = 14210
+iface = 'localhost'
+poetry_file = 'poetry/ecstasy.txt'
+
+
+topService = service.MultiService()
+
+spider_service = SpiderService()
+spider_service.setServiceParent(topService)
+
+factory = SpiderFactory(spider_service)
+tcpService = internet.TCPServer(port, factory, interface=iface)
+tcpService.setServiceParent(top_service)
+
+
+application = service.Application("spider")
+
+topService.setServiceParent(application)
+"""
