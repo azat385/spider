@@ -5,10 +5,11 @@ from twisted.internet import protocol, reactor
 from twisted.protocols import basic
 from random import randint
 from twisted.python import log
+from twisted.python.logfile import DailyLogFile
+log.startLogging(DailyLogFile.fromFullPath("/home/ubuntu/spider/logs/logfile.log"))
 
 
 """import argparse
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-p","--port", nargs="?", type=int, help="port number",default=1079)
