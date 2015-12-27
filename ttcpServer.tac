@@ -5,8 +5,9 @@ from twisted.internet import protocol, reactor
 from twisted.protocols import basic
 from random import randint
 from twisted.python import log
+from twisted.python.log import ILogObserver, FileLogObserver
 from twisted.python.logfile import DailyLogFile
-log.startLogging(DailyLogFile.fromFullPath("/home/ubuntu/spider/logs/logfile.log"))
+#log.startLogging(DailyLogFile.fromFullPath("/home/ubuntu/spider/logs/logfile.log"))
 
 
 """import argparse
@@ -129,8 +130,10 @@ class SpiderFactory(protocol.ServerFactory):
 userDict = {'moshes':'Happy' , 'azat':'Very happy', 'ruslan':'2 cildren'}
 
 application = service.Application('spider', uid=1, gid=1)
+logfile = DailyLogFile("my.log", "/home/ubuntu/spider/logs/")
+application.setComponent(ILogObserver, FileLogObserver(logfile).emit)
 factory = SpiderFactory(**userDict)
-internet.TCPServer(14210, factory).setServiceParent(
+internet.TCPServer(args.port, factory).setServiceParent(
     service.IServiceCollection(application))
 
 """ for future
