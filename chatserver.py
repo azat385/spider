@@ -4,9 +4,11 @@ run me with twistd -y chatserver.py, and then connect with multiple
 telnet clients to port 1025
 """
 port = 6565
+delayBeforeDropConnection = 120
+
 
 #from twisted.protocols import basic
-from twisted.internet import protocol
+from twisted.internet import protocol, reactor
 from twisted.application import service, internet
 
 
@@ -15,9 +17,10 @@ class MyChat(protocol.Protocol):
     def connectionMade(self):
         print "Got new client: {}".format(self.transport.getPeer())
         self.factory.clients.append(self)
+	reactor.callLater(delayBeforeDropConnection, self.dropConnection)
 
     def connectionLost(self, reason):
-        print "Lost a client!"
+        print "Lost a client! reason: ()".format(reason)
         self.factory.clients.remove(self)
 
     def dataReceived(self, line):
@@ -28,6 +31,9 @@ class MyChat(protocol.Protocol):
 
     def message(self, message):
         self.transport.write(message)
+
+    def dropConnection(self):
+	self.transport.loseConnection()
 
 
 
