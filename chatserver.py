@@ -25,7 +25,7 @@ class MyChat(protocol.Protocol):
 
     def dataReceived(self, line):
         print "received", repr(line)
-	self.timeout.delay(delayBeforeDropConnection)
+	self.timeout.reset(delayBeforeDropConnection)
         for c in self.factory.clients:
             if c != self:
 		c.message(line)
