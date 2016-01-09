@@ -17,14 +17,15 @@ class MyChat(protocol.Protocol):
     def connectionMade(self):
         print "Got new client: {}".format(self.transport.getPeer())
         self.factory.clients.append(self)
-	reactor.callLater(delayBeforeDropConnection, self.dropConnection)
+	self.timeout = reactor.callLater(delayBeforeDropConnection, self.dropConnection)
 
     def connectionLost(self, reason):
-        print "Lost a client! reason: ()".format(reason)
+        print "Lost a client! reason: {}".format(reason)
         self.factory.clients.remove(self)
 
     def dataReceived(self, line):
         print "received", repr(line)
+	self.timeout.delay(delayBeforeDropConnection)
         for c in self.factory.clients:
             if c != self:
 		c.message(line)
