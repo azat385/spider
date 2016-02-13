@@ -1,3 +1,6 @@
+# sudo python twistd -y ttcpServer.tac --pidfile=gsm.pid --uid=0
+# /usr/bin/python /usr/local/bin/twistd
+# sudo kill -TERM $(sudo cat gsm.pid)
 # Read username, output from non-empty factory, drop connections
 
 from twisted.application import internet, service
@@ -77,7 +80,7 @@ class SpiderProtocol(protocol.Protocol):
                 s.append(data[5+1:5+1+15])
                 s.append(data[5+16:5+16+16])
                 s.append(data[5+32:5+32+10])
-                s.append(ord(data[67]))
+                s.append(ord(data[47]))
 		log.msg( "handleIMEI:s:{}".format(s) )
 	except:
 		log.msg( "some error in wrx auth response decoding" )
@@ -129,7 +132,7 @@ class SpiderFactory(protocol.ServerFactory):
 
 userDict = {'moshes':'Happy' , 'azat':'Very happy', 'ruslan':'2 cildren'}
 
-application = service.Application('spider', uid=1, gid=1)
+application = service.Application('spider', uid=0, gid=0)
 logfile = DailyLogFile("my.log", "/home/ubuntu/spider/logs/")
 application.setComponent(ILogObserver, FileLogObserver(logfile).emit)
 factory = SpiderFactory(**userDict)
