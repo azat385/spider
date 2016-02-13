@@ -4,11 +4,25 @@ import BaseHTTPServer
 
 from mcStat import getArray
 
+#import sys
+#sys.stderr = open('mchttp.log', 'a')
+
+
 HOST_NAME ='0.0.0.0' # !!!REMEMBER TO CHANGE THIS!!!
 PORT_NUMBER = 8081 # Maybe set this to 9000.
 
 
 class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+    log_file = open("mchttp.log", mode="w",)
+
+    def log_message(self, format, *args):
+        self.log_file = open("mchttp.log", mode="a",)
+        self.log_file.write("%s - - [%s] %s\n" %
+                            (self.client_address[0],
+                             self.log_date_time_string(),
+                             format%args))
+        self.log_file.close()
+
     def do_HEAD(s):
         s.send_response(200)
         s.send_header("Content-type", "text/html")
