@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # start in windows python d:\Python27\Scripts\twistd.py -ny ttcpServer.py
-# sudo python twistd -y ttcpServer.tac --pidfile=gsm.pid --uid=0
+# sudo kill -TERM $(sudo cat gsm.pid)
+# sudo python /usr/local/bin/twistd -y ttcpServer.py --pidfile=gsm.pid --uid=0
 
 from twisted.application import internet, service
 from twisted.internet import protocol, reactor
@@ -12,7 +13,7 @@ from datetime import datetime
 
 
 class myArgs():
-    delay = 10
+    delay = 30
     port = 14210
     delayBeforeDropConnection = 300
 
@@ -98,8 +99,8 @@ class getDeviceData():
         {
             'settings':
                 {
-                    'request':"\x02\x03\x03\xC0\x00\x10\x44\x4D",
-                    'unpackStr':'hhffffhhhhhh',
+                    'request':"\x02\x03\x03\xC0\x00\x15\x84\x4E",
+                    'unpackStr':'hhffffhhhhhhffh',
                     'timePeriod_sec': 5,
                     'individualTag': True,
                     'virtual': True,
@@ -119,6 +120,9 @@ class getDeviceData():
                     {'id': 10,     'name': "ПИД конд"     	, 'type': int16   	, 'saveTrigger': onChange   , 'saveAttr': (5, 3,),   },
                     {'id': 11,     'name': "ПИД охлад"    	, 'type': int16   	, 'saveTrigger': onChange   , 'saveAttr': (5, 3,),   },
                     {'id': 12,     'name': "текущий цикл"	, 'type': int16   	, 'saveTrigger': onChange   , 'saveAttr': (0, 3,),   },
+                    {'id': 13,     'name': "P всас расчет"	, 'type': float32   , 'saveTrigger': onChange   , 'saveAttr': (0, 3,),   },
+                    {'id': 14,     'name': "Темп охлад"	    , 'type': float32   , 'saveTrigger': onChange   , 'saveAttr': (0, 3,),   },
+                    {'id': 15,     'name': "Флаг2"	        , 'type': int16   	, 'saveTrigger': onChange   , 'saveAttr': (0, 3,),   },
                 )
             ,
             'virtual':
@@ -166,8 +170,8 @@ class getDeviceData():
         {
             'settings':
                 {
-                    'request':"\x02\x03\x03\xD5\x00\x2C\x55\x98",
-                    'unpackStr':22*'f',
+                    'request':"\x02\x03\x03\xD5\x00\x2E\xD4\x59",
+                    'unpackStr':22*'f'+'hh',
                     'timePeriod_sec': 25,
                     'individualTag': False,
                     'virtual': False,
@@ -197,6 +201,8 @@ class getDeviceData():
                     {'id': 32,'name': "время цикла ОТКЛ 9"      , 'type': float32  	, 'saveTrigger': onSpecialChange     ,'saveAttr': (12, 9,),    },
                     {'id': 33,'name': "время цикла ВКЛ  А"      , 'type': float32  	, 'saveTrigger': onSpecialChange     ,'saveAttr': (12, 9,),    },
                     {'id': 34,'name': "время цикла ОТКЛ А"      , 'type': float32  	, 'saveTrigger': onSpecialChange     ,'saveAttr': (12, 9,),    },
+                    {'id': 35,'name': "Все пуски"	            , 'type': int16   	, 'saveTrigger': onChange   , 'saveAttr': (0, 3,),   },
+                    {'id': 36,'name': "Удачные пуски"	        , 'type': int16   	, 'saveTrigger': onChange   , 'saveAttr': (0, 3,),   },
                 )
         },
     ]
