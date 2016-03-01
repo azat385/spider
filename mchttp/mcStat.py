@@ -45,13 +45,13 @@ class MemcachedStats:
         ' Return a dict containing memcached stats '
         return dict(self._stat_regex.findall(self.command('stats')))
 
-def getKeys(argv=None):
+def getKeys(limit=100):
     host = '127.0.0.1'
     port = '11211'
     #import pprint
     m = MemcachedStats(host, port)
     #pprint.pprint(m.keys())
-    return m.keys()
+    return m.keys(limit=limit)
 
 def getArray():
     keys = getKeys()

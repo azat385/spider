@@ -82,18 +82,18 @@ class getServerCommonData():
         if self.common_data.has_key(id):
             return self.common_data[id]
 
+int16 = 'h'
+float32 = 'f'
+bool0 = '?'
+doNotSave = 0
+onChange = 1            #saveAttr:(delta, 3min)
+percentChange = 2       #3%
+onSpecialChange = 3     #otherTagID=value
+
 
 
 class getDeviceData():
-    int16 = 'h'
-    float32 = 'f'
-    bool0 = '?'
-
-    doNotSave = 0
-    onChange = 1            #3min
-    percentChange = 2       #3%
-    onSpecialChange = 3     #otherTagID=value
-
+    """write usage here"""
 
     morgSettings = [
         {
@@ -120,9 +120,9 @@ class getDeviceData():
                     {'id': 10,     'name': "ПИД конд"     	, 'type': int16   	, 'saveTrigger': onChange   , 'saveAttr': (5, 3,),   },
                     {'id': 11,     'name': "ПИД охлад"    	, 'type': int16   	, 'saveTrigger': onChange   , 'saveAttr': (5, 3,),   },
                     {'id': 12,     'name': "текущий цикл"	, 'type': int16   	, 'saveTrigger': onChange   , 'saveAttr': (0, 3,),   },
-                    {'id': 13,     'name': "P всас расчет"	, 'type': float32   , 'saveTrigger': onChange   , 'saveAttr': (0, 3,),   },
-                    {'id': 14,     'name': "Темп охлад"	    , 'type': float32   , 'saveTrigger': onChange   , 'saveAttr': (0, 3,),   },
-                    {'id': 15,     'name': "Флаг2"	        , 'type': int16   	, 'saveTrigger': onChange   , 'saveAttr': (0, 3,),   },
+                    {'id': 13,     'name': "P всас расчет"	, 'type': float32   	, 'saveTrigger': doNotSave   , 'saveAttr': (0, 3,),   },
+                    {'id': 14,     'name': "Темп охлад"	    	, 'type': float32   	, 'saveTrigger': onChange   , 'saveAttr': (0.2, 3,),   },
+                    {'id': 15,     'name': "Флаг2"	        , 'type': int16   	, 'saveTrigger': doNotSave   , 'saveAttr': (0, 3,),   },
                 )
             ,
             'virtual':
@@ -131,22 +131,22 @@ class getDeviceData():
                         'getFromID': 1,
                         'data':
                             (
-                                {'id': 35,	'name': "DIN_пуск"					, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 36,	'name': "DIN_скуд"					, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 37,	'name': "DO_свет"					, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 38,	'name': "DIN_геркон"				, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 39,	'name': "санкц_доступ"				, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 40,	'name': "НЕсанкц_доступ"			, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 41,	'name': "DIN_кнопка откр_дверь"		, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 42,	'name': "DO_электр_маг_замок"		, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 43,	'name': "DO_авария"					, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 44,	'name': "DO_работа"					, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 45,	'name': "DO_вент_фильтра"			, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 46,	'name': "DO_вент_охлажд"			, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 47,	'name': "DO_вент_конденс"			, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 48,	'name': "DO_запуск_компр"			, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 49,	'name': "Флаг1_бит14"				, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 50,	'name': "Флаг1_бит15"				, 'type': bool0  	, 'saveTrigger': onChange,		},
+                                {'id': 35,	'name': "DIN_пуск"					, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 36,	'name': "DIN_скуд"					, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 37,	'name': "DO_свет"					, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 38,	'name': "DIN_геркон"				, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 39,	'name': "санкц_доступ"				, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 40,	'name': "НЕсанкц_доступ"			, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 41,	'name': "DIN_кнопка откр_дверь"		, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 42,	'name': "DO_электр_маг_замок"		, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 43,	'name': "DO_авария"					, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 44,	'name': "DO_работа"					, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 45,	'name': "DO_вент_фильтра"			, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 46,	'name': "DO_вент_охлажд"			, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 47,	'name': "DO_вент_конденс"			, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 48,	'name': "DO_запуск_компр"			, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 49,	'name': "ОС_работа_компр"			, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 50,	'name': "Флаг1_бит15"				, 'type': bool0  	, 'saveTrigger': doNotSave,		},
                             )
                     }
                     ,
@@ -154,15 +154,15 @@ class getDeviceData():
                         'getFromID': 2,
                         'data':
                             (
-                                {'id': 51,	'name': "Авария бит 1"				, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 52,	'name': "Авария бит 2"				, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 53,	'name': "Авария бит 3"				, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 54,	'name': "Авария бит 4"				, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 55,	'name': "Авария бит 5"				, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 56,	'name': "Авария бит 6"				, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 57,	'name': "Авария бит 7"				, 'type': bool0  	, 'saveTrigger': onChange,		},
-                                {'id': 58,	'name': "Авария бит 8"				, 'type': bool0  	, 'saveTrigger': onChange,		},
-                            )
+                                {'id': 51,	'name': "Авария бит 1"				, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 52,	'name': "Авария бит 2"				, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 53,	'name': "Авария бит 3"				, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 54,	'name': "Авария бит 4"				, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 55,	'name': "Авария бит 5"				, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 56,	'name': "Авария бит 6"				, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 57,	'name': "Авария бит 7"				, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 58,	'name': "Авария бит 8"				, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+			    )
                     }
                 ]
             ,
@@ -201,8 +201,8 @@ class getDeviceData():
                     {'id': 32,'name': "время цикла ОТКЛ 9"      , 'type': float32  	, 'saveTrigger': onSpecialChange     ,'saveAttr': (12, 9,),    },
                     {'id': 33,'name': "время цикла ВКЛ  А"      , 'type': float32  	, 'saveTrigger': onSpecialChange     ,'saveAttr': (12, 9,),    },
                     {'id': 34,'name': "время цикла ОТКЛ А"      , 'type': float32  	, 'saveTrigger': onSpecialChange     ,'saveAttr': (12, 9,),    },
-                    {'id': 35,'name': "Все пуски"	            , 'type': int16   	, 'saveTrigger': onChange   , 'saveAttr': (0, 3,),   },
-                    {'id': 36,'name': "Удачные пуски"	        , 'type': int16   	, 'saveTrigger': onChange   , 'saveAttr': (0, 3,),   },
+                    {'id': 35,'name': "Все пуски"	        , 'type': int16   	, 'saveTrigger': onSpecialChange     ,'saveAttr': (0, 3,),   },
+                    {'id': 36,'name': "Удачные пуски"	        , 'type': int16   	, 'saveTrigger': onSpecialChange     ,'saveAttr': (0, 3,),   },
                 )
         },
     ]
@@ -316,18 +316,63 @@ def rearrangeData(_data,_unpackStr):
         return dataNew
 
 
-def printTuple(dataT, valT, strT, prependStr='', key_str_separater = '.', val_str_separater = ';'):
+def printTuple(dataT, valT, strT, prependStr='', key_str_separater='.', val_str_separater=';'):
     import memcache
     mc = memcache.Client(['127.0.0.1:11211'], debug=0)
+    #mc.flush_all()
+
+    onlineStr = "online"
+    lastSavedStr = "lastSaved"
+    archiveStr = "archive"
+
+    def form_key_str(base_str, adding_str):
+        return "{}_{}".format(adding_str, base_str)
+
+
     minIndex = min([len(dataT), len(valT)])
     i = 0
     for i in xrange(minIndex):
+        value = valT[i]
+        #online values
         formKeyStr = "{}{}{}".format(prependStr, key_str_separater, dataT[i]['name'])
         formKeyStr = formKeyStr.replace(" ", "_")   #no blanks in key
-        formValStr = "{}{}{}".format(valT[i],val_str_separater, strT)
+        formValStr = "{}{}{}".format(value,val_str_separater, strT)
         print "{}={}".format(formKeyStr, formValStr)
-        mc.set(formKeyStr, formValStr)
+        mc.set(form_key_str(formKeyStr,onlineStr), formValStr)
+        #last saved values and append archiving
+        if dataT[i]['saveTrigger']==onChange:
+            #get last saved value
+            keyLastSaved = form_key_str(formKeyStr,lastSavedStr)
+            #print "key: {}".format(keyLastSaved)
+            lastSavedValue = mc.get(keyLastSaved)
+            #print "value: {}".format(lastSavedValue)
+            if lastSavedValue is None:
+                mc.set(keyLastSaved,formValStr)
+                #print "Set {}={}".format(keyLastSaved,formValStr)
+                continue
+            else:
+                vT = tuple(lastSavedValue.split(";"))
+                lastSaved_value,lastSaved_time = vT[:2]
+                lastSaved_value = float(lastSaved_value)
+                if not dataT[i].has_key('saveAttr'):
+                    continue
+                delta_value, delta_time = dataT[i]['saveAttr']
+                if (abs(lastSaved_value-value)>delta_value) \
+                    or (check_time_passed(t1=lastSaved_time, t2=strT, deltaSec=delta_time*60)):
+                    mc.set(keyLastSaved,formValStr)
+                    appendKey = form_key_str(formKeyStr,archiveStr)
+                    if mc.append(appendKey,';;;'+formValStr) is False:
+                        mc.set(appendKey,formValStr)
 
+
+
+def check_time_passed(t1,t2,deltaSec=180):
+    t1 = datetime.strptime(t1,"%Y-%m-%d %H:%M:%S.%f")
+    t2 = datetime.strptime(t2,"%Y-%m-%d %H:%M:%S.%f")
+    dif = t2-t1
+    dif_sec = abs(dif.total_seconds())
+    return dif_sec >= deltaSec
+    #print "dif time= {} delta= {}".format(dif_sec,deltaSec)
 
 
 
