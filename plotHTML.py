@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-db_name = 'test1.db'
+db_name = '/home/ubuntu/spider/test1.db'
 import sqlite3
 from datetime import datetime
 
@@ -12,7 +12,7 @@ p = ['archive_morg.Давл_нагн', 'archive_morg.Темп_камеры', 'ar
 
 f = []
 for p1 in p:
-    c1 = conn.execute("SELECT  VALUE, STIME FROM RAWDATA WHERE NAME=? ORDER BY ID DESC LIMIT 100",(p1,))
+    c1 = conn.execute("SELECT  VALUE, STIME FROM RAWDATA WHERE NAME=? AND (STIME>= datetime('now','-1 day')) ORDER BY ID DESC",(p1,))
     f.append(c1.fetchall())
 conn.close()
 
@@ -33,7 +33,7 @@ for p1,f1 in zip(p,f):
 from plotly.graph_objs import Scatter, Layout
 from plotly.offline import plot
 
-plot(data, filename='index.html', auto_open=False)
+plot(data, filename='/home/ubuntu/spider/index.html', auto_open=False, show_link=False)
 
 
 
