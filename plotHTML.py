@@ -8,7 +8,7 @@ from datetime import datetime
 conn = sqlite3.connect(db_name)
 conn.text_factory = str
 
-p = ['archive_morg.Давл_нагн', 'archive_morg.Темп_камеры', 'archive_morg.t_всас', 'archive_morg.Темп_охлад']
+p = ['archive_morg.Давл_нагн', 'archive_morg.Темп_камеры', 'archive_morg.t_всас', 'archive_morg.Темп_охлад', 'archive_morg.t_комн_конд']
 
 f = []
 for p1 in p:
