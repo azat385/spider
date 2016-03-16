@@ -13,7 +13,7 @@ from datetime import datetime
 
 
 class myArgs():
-    delay = 30
+    delay = 10
     port = 14210
     delayBeforeDropConnection = 300
 
@@ -122,7 +122,7 @@ class getDeviceData():
                     {'id': 12,     'name': "текущий цикл"	, 'type': int16   	, 'saveTrigger': onChange   , 'saveAttr': (0, 3,),   },
                     {'id': 13,     'name': "P всас расчет"	, 'type': float32   	, 'saveTrigger': doNotSave   , 'saveAttr': (0, 3,),   },
                     {'id': 14,     'name': "Темп охлад"	    	, 'type': float32   	, 'saveTrigger': onChange   , 'saveAttr': (0.2, 3,),   },
-                    {'id': 15,     'name': "Флаг2"	        , 'type': int16   	, 'saveTrigger': doNotSave   , 'saveAttr': (0, 3,),   },
+                    {'id': 15,     'name': "Флаг2"	        , 'type': int16   	, 'saveTrigger': onChange   , 'saveAttr': (0, 1,),   },
                 )
             ,
             'virtual':
@@ -146,7 +146,7 @@ class getDeviceData():
                                 {'id': 47,	'name': "DO_вент_конденс"			, 'type': bool0  	, 'saveTrigger': doNotSave,		},
                                 {'id': 48,	'name': "DO_запуск_компр"			, 'type': bool0  	, 'saveTrigger': doNotSave,		},
                                 {'id': 49,	'name': "ОС_работа_компр"			, 'type': bool0  	, 'saveTrigger': doNotSave,		},
-                                {'id': 50,	'name': "Флаг1_бит15"				, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 50,	'name': "DO_ТЭН"				, 'type': bool0  	, 'saveTrigger': doNotSave,		},
                             )
                     }
                     ,
@@ -164,14 +164,37 @@ class getDeviceData():
                                 {'id': 58,	'name': "Авария бит 8"				, 'type': bool0  	, 'saveTrigger': doNotSave,		},
 			    )
                     }
+		    ,
+                    {
+                        'getFromID': 15,
+                        'data':
+                            (
+                                {'id': 59,	'name': "Нужно оттаивать"					, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 60,	'name': "Общее разреш ТЭН"					, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 61,	'name': "Задержка после откл комп"			, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 62,	'name': "огр 1цикла ТЭНа по врем"			, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 63,	'name': "огр 1цикла ТЭНа по темп"			, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 64,	'name': "огр темп ТЭН"						, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 65,	'name': "запуск оттайки по врем"			, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 66,	'name': "запуск оттайки по низк t охлад"	, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 67,	'name': "ОТКЛ 1цикл ТЭНа по врем"			, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 68,	'name': "ОТКЛ 1цикл ТЭНа по темп"			, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 69,	'name': "ОТКЛ темп ТЭН"						, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 70,	'name': "заверш оттайки по числу цикл"		, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 71,	'name': "заверш оттайки по времени"			, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 72,	'name': "Резерв бит 13"						, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 73,	'name': "Резерв бит 14"						, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                                {'id': 74,	'name': "Резерв бит 15"			        	, 'type': bool0  	, 'saveTrigger': doNotSave,		},
+                            )
+                    }
                 ]
             ,
         },
         {
             'settings':
                 {
-                    'request':"\x02\x03\x03\xD5\x00\x2E\xD4\x59",
-                    'unpackStr':22*'f'+'hh',
+                    'request':"\x02\x03\x03\xD5\x00\x38\x55\x97",
+                    'unpackStr':22*'f'+'hh'+'ffffhh',
                     'timePeriod_sec': 25,
                     'individualTag': False,
                     'virtual': False,
@@ -203,6 +226,12 @@ class getDeviceData():
                     {'id': 34,'name': "время цикла ОТКЛ А"      , 'type': float32  	, 'saveTrigger': onSpecialChange     ,'saveAttr': (12, 9,),    },
                     {'id': 35,'name': "Все пуски"	        , 'type': int16   	, 'saveTrigger': onSpecialChange     ,'saveAttr': (0, 3,),   },
                     {'id': 36,'name': "Удачные пуски"	        , 'type': int16   	, 'saveTrigger': onSpecialChange     ,'saveAttr': (0, 3,),   },
+                    {'id': 37,'name': "Накопл ВКЛ комп"         , 'type': float32  	, 'saveTrigger': onChange            , 'saveAttr': (1, 2,),  },
+                    {'id': 38,'name': "Накопл ОТКЛ комп"        , 'type': float32  	, 'saveTrigger': onChange            , 'saveAttr': (1, 2,),  },
+                    {'id': 39,'name': "Накопл ВКЛ ТЭН"          , 'type': float32  	, 'saveTrigger': onChange            , 'saveAttr': (1, 2,),  },
+                    {'id': 40,'name': "Накопл ОТКЛ ТЭН"         , 'type': float32  	, 'saveTrigger': onChange            , 'saveAttr': (1, 2,),  },
+                    {'id': 41,'name': "Тек цикл оттайки"        , 'type': int16  	, 'saveTrigger': onChange            , 'saveAttr': (0, 2,),  },
+                    {'id': 42,'name': "Резерв int16"            , 'type': int16  	, 'saveTrigger': doNotSave           , 'saveAttr': (1, 2,),  },
                 )
         },
     ]
