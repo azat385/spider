@@ -69,7 +69,7 @@ if __name__ == '__main__':
     from time import sleep
 
     while 1:
-        top100keys = getKeys()
+        top100keys = getKeys(limit=200)
         for key in top100keys:
             if "archive" in key:
                 for _ in xrange(5):

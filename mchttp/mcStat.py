@@ -53,8 +53,8 @@ def getKeys(limit=100):
     #pprint.pprint(m.keys())
     return m.keys(limit=limit)
 
-def getArray():
-    keys = getKeys()
+def getArray(limit=100):
+    keys = getKeys(limit=limit)
     import memcache
     mc = memcache.Client(['127.0.0.1:11211'], debug=0)
     arr = []
