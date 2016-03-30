@@ -231,10 +231,6 @@ def rearrangeData(_data,_unpackStr):
 
 
 def printTuple(dataT, valT, strT, prependStr='', key_str_separater='.', val_str_separater=';'):
-    import memcache
-    mc = memcache.Client(['127.0.0.1:11211'], debug=0)
-    #mc.flush_all()
-
     onlineStr = "online"
     lastSavedStr = "lastSaved"
     archiveStr = "archive"
