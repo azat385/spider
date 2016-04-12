@@ -100,6 +100,7 @@ class getServerCommonData():
             return self.common_data[id]
 
 int16 = 'h'
+int32 = 'i'
 float32 = 'f'
 bool0 = '?'
 doNotSave = 0
@@ -159,7 +160,7 @@ class getDeviceData():
             return self.currentRequest()
 
         import struct
-        valueTuple = struct.unpack('>' + unpackStr, dNew)
+        valueTuple = struct.unpack(unpackStr, dNew)
         printTuple(self.morgSet[self.i]['data'] ,valueTuple, strTimeStamp, prependStr=self.name)
         if self.morgSet[self.i]['settings']['virtual']:
             for virtSet in self.morgSet[self.i]['virtual']:
@@ -221,7 +222,7 @@ def rearrangeData(_data,_unpackStr):
         dataNew = ''
         for s in _unpackStr:
             iEnd = iBegin + struct.calcsize(s)
-            if s == 'f':
+            if s in 'fiIlL':
                 addData = _data[iBegin:iEnd][2:] + _data[iBegin:iEnd][:2]
             else:
                 addData = _data[iBegin:iEnd]

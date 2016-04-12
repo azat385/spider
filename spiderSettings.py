@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 int16 = 'h'
+int32 = 'i'
 float32 = 'f'
 bool0 = '?'
 doNotSave = 0
@@ -15,7 +16,7 @@ morgSettings = [
             'settings':
                 {
                     'request':"\x02\x03\x03\xC0\x00\x15\x84\x4E",
-                    'unpackStr':'hhffffhhhhhhffh',
+                    'unpackStr':'>hhffffhhhhhhffh',
                     'timePeriod_sec': 5,
                     'individualTag': True,
                     'virtual': True,
@@ -109,7 +110,7 @@ morgSettings = [
             'settings':
                 {
                     'request':"\x02\x03\x03\xD5\x00\x38\x55\x97",
-                    'unpackStr':22*'f'+'hh'+'ffffhh',
+                    'unpackStr':'>'+22*'f'+'hh'+'ffffhh',
                     'timePeriod_sec': 25,
                     'individualTag': False,
                     'virtual': False,
@@ -156,7 +157,7 @@ mt6050Settings = [
             'settings':
                 {
                     'request': "\x04\x03\x00\x00\x00\x0A\xC5\x98",
-                    'unpackStr': 10*'h',
+                    'unpackStr': '>'+10*'h',
                     'timePeriod_sec': 5,
                     'individualTag': False,
                     'virtual': False,
