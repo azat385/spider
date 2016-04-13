@@ -1,14 +1,176 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import struct
+
 int16 = 'h'
 int32 = 'i'
 float32 = 'f'
+flt32 = 'f'
 bool0 = '?'
 doNotSave = 0
 onChange = 1            #saveAttr:(delta, 3min)
 percentChange = 2       #3%
 onSpecialChange = 3     #otherTagID=value
+
+#(40960, 41065)
+pixel_std_map = (
+    (
+        {'id': 1 , 'type': int32,	'saveTrigger': doNotSave,	'name':"SCADA",	},
+        {'id': 2 , 'type': int32,	'saveTrigger': doNotSave,	'name':"Version",	},
+        {'id': 3 , 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Код (SCADA)",	},
+        {'id': 4 , 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Код (CPU)",	},
+        {'id': 5 , 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Код (Аварии)",	},
+        {'id': 6 , 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Код (SENS)",	},
+        {'id': 7 , 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Код (Состояние)",	},
+        {'id': 8 , 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Код (Отключение)",	},
+        {'id': 9 , 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Код (Расположение)",	},
+        {'id': 10, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Код (Программа)",	},
+        {'id': 11, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Код (MV)",	},
+        {'id': 12, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Код (R2)",	},
+        {'id': 13, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Код (R3)",	},
+        {'id': 14, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Код (R4)",	},
+        {'id': 15, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Код (R5)",	},
+        {'id': 16, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Код (R6)",	},
+        {'id': 17, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Код (R7)",	},
+        {'id': 18, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_t_(наружная)",	},
+        {'id': 19, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_t_(канала)",	},
+        {'id': 20, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_t_(обр_воды)",	},
+        {'id': 21, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_t_(помещения)",	},
+        {'id': 22, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_t_(вытяжки)",	},
+        {'id': 23, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_Влажность",	},
+        {'id': 24, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_Расход_Приток",	},
+        {'id': 25, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_Расход_Вытяжка",	},
+        {'id': 26, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_CO2",	},
+        {'id': 27, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_PDS_Рекуперат",	},
+        {'id': 28, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_t_(обр_воды2)",	},
+        {'id': 29, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_ДR1",	},
+        {'id': 30, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_ДR2",	},
+        {'id': 31, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_ДR3",	},
+        {'id': 32, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_ДR4",	},
+        {'id': 33, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_Уставка_t",	},
+        {'id': 34, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_Уставка_h",	},
+        {'id': 35, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_Уставка_CO2",	},
+        {'id': 36, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Уставка_tзл",	},
+        {'id': 37, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Уставка_ВГ",	},
+        {'id': 38, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_Уставка_поправка(t)",	},
+        {'id': 39, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_Уставка_итог(t)",	},
+        {'id': 40, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Уставка_РЗВ",	},
+        {'id': 41, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Уставка_ВКЛ",	},
+        {'id': 42, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_Уставка_Задатчик",	},
+        {'id': 43, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Уставка_R2",	},
+        {'id': 44, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Уставка_R3",	},
+        {'id': 45, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Уставка_R4",	},
+        {'id': 46, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_Уставка_R5",	},
+        {'id': 47, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_max_(Уст_t)",	},
+        {'id': 48, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_min_(Уст_t)",	},
+        {'id': 49, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_max_(Уст_h)",	},
+        {'id': 50, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_min_(Уст_h)",	},
+        {'id': 51, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_max_(Уст_CO2)",	},
+        {'id': 52, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_min_(Уст_CO2)",	},
+        {'id': 53, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_max_(Уст_tзл)",	},
+        {'id': 54, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_min_(Уст_tзл)",	},
+        {'id': 55, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_max_(Задатчик)",	},
+        {'id': 56, 'type': flt32,	'saveTrigger': doNotSave,	'name':"SCo_min_(Задатчик)",	},
+    ),
+    (
+        {'id': 57, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_max_(R2)",	},
+        {'id': 58, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_min_(R2)",	},
+        {'id': 59, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_max_(R3)",	},
+        {'id': 60, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_min_(R3)",	},
+        {'id': 61, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_max_(R4)",	},
+        {'id': 62, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_min_(R4)",	},
+        {'id': 63, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_max_(R5)",	},
+        {'id': 64, 'type': int32,	'saveTrigger': doNotSave,	'name':"SCo_min_(R5)",	},
+        {'id': 65, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_ЖП",	},
+        {'id': 66, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_ЖВ",	},
+        {'id': 67, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_ВП",	},
+        {'id': 68, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_ВВ",	},
+        {'id': 69, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_ВоКал",	},
+        {'id': 70, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_Насос",	},
+        {'id': 71, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_ЭКал",	},
+        {'id': 72, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_Рекуп",	},
+        {'id': 73, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_СмЗасл",	},
+        {'id': 74, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_Увлаж",	},
+        {'id': 75, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_Охлад",	},
+        {'id': 76, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_R1",	},
+        {'id': 77, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_R2",	},
+        {'id': 78, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_R3",	},
+        {'id': 79, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_R4",	},
+        {'id': 80, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_R5",	},
+        {'id': 81, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_R6",	},
+        {'id': 82, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_R7",	},
+        {'id': 83, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%ВоКал",	},
+        {'id': 84, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%ЭКал",	},
+        {'id': 85, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_СтЭКал",	},
+        {'id': 86, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%Рекуп",	},
+        {'id': 87, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%СмЗасл",	},
+        {'id': 88, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%Охл",	},
+        {'id': 89, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%Увл",	},
+        {'id': 90, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%ВП",	},
+        {'id': 91, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%ВВ",	},
+        {'id': 92, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%R1",	},
+        {'id': 93, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%R2",	},
+        {'id': 94, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%R3",	},
+        {'id': 95, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%R4",	},
+        {'id': 96, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%R5",	},
+        {'id': 97, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%R6",	},
+        {'id': 98, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%R7",	},
+    )
+)
+
+
+def form_std_settings(dic, modbus_set=(1, 3, 40960), prepend_name=""):
+    data_dic = dic
+    std_dict = \
+        {
+            'settings':
+                {
+                    'request': "\x04\x03\x00\x00\x00\x0A\xC5\x98",
+                    'unpackStr': ">"+10*'h',
+                    'timePeriod_sec': 5,
+                    'individualTag': False,
+                    'virtual': False,
+                }
+             ,
+            'data':
+                (
+                    {'id': 1 ,'name': "zero"     , 'type': int16  	, 'saveTrigger': doNotSave,		},
+                    {'id': 2 ,'name': "Sec"      , 'type': int16  	, 'saveTrigger': doNotSave,		},
+                    {'id': 3 ,'name': "Min"      , 'type': int16  	, 'saveTrigger': doNotSave,		},
+                    {'id': 4 ,'name': "Hour"     , 'type': int16  	, 'saveTrigger': doNotSave,		},
+                    {'id': 5 ,'name': "Day"      , 'type': int16  	, 'saveTrigger': doNotSave,		},
+                    {'id': 6 ,'name': "Month"    , 'type': int16  	, 'saveTrigger': doNotSave,		},
+                    {'id': 7 ,'name': "Year"     , 'type': int16  	, 'saveTrigger': doNotSave,		},
+                    {'id': 8 ,'name': "Inc100"   , 'type': int16  	, 'saveTrigger': doNotSave,		},
+                    {'id': 9 ,'name': "Var"      , 'type': int16  	, 'saveTrigger': doNotSave,		},
+                    {'id': 10,'name': "Tens	"    , 'type': int16  	, 'saveTrigger': doNotSave,		},
+                )
+        }
+
+    unpackStr = '>'
+    new_data_dic = ()
+    for elem in data_dic:
+        unpackStr += elem['type']
+        elem1 = elem.copy()
+        elem1['name']= "{}{}".format(prepend_name, elem1['name'])
+        new_data_dic += (elem1,)
+
+    std_dict['data'] = new_data_dic
+    std_dict['settings']['unpackStr'] = unpackStr
+
+    len_req = struct.calcsize(unpackStr)/2
+    modbus_set += (len_req, )
+    std_dict['settings']['request'] = form_modbus_request(req=modbus_set)
+
+    return std_dict
+
+
+def form_modbus_request(req=(1, 3, 40960, 105)):
+    req_str = struct.pack(">bbHH", *req)
+    from crc16 import addCRC
+    req_str = addCRC(req_str)
+    return str(req_str)
 
 
 morgSettings = [
@@ -152,12 +314,12 @@ morgSettings = [
         },
 ]
 
-mt6050Settings = [
+aktanishSettings = [
     {
             'settings':
                 {
                     'request': "\x04\x03\x00\x00\x00\x0A\xC5\x98",
-                    'unpackStr': '>'+10*'h',
+                    'unpackStr': ">"+10*'h',
                     'timePeriod_sec': 5,
                     'individualTag': False,
                     'virtual': False,
@@ -179,17 +341,22 @@ mt6050Settings = [
         },
 ]
 
-bolgarSettings=[]
+aktanishSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 960), prepend_name="PP1_"))
+aktanishSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 1065), prepend_name="PP1_"))
+aktanishSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 1960), prepend_name="PP2_"))
+aktanishSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 2065), prepend_name="PP2_"))
+
+bolgarSettings = []
 common_data_name = {
     'morg': morgSettings,
     'bolgar': bolgarSettings,
-    'mt6050': mt6050Settings,
+    'aktanish': aktanishSettings,
 }
 
 common_data_imei = {
     #'351513054631988':'bolgar',
     '351513054570863':'morg',
-    '351513054687493':'mt6050',
+    '351513054687493':'aktanish',
     }
 
 if __name__ == '__main__':
