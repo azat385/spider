@@ -341,22 +341,33 @@ aktanishSettings = [
         },
 ]
 
-aktanishSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 960), prepend_name="PP1_"))
-aktanishSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 1065), prepend_name="PP1_"))
-aktanishSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 1960), prepend_name="PP2_"))
-aktanishSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 2065), prepend_name="PP2_"))
+aktanishSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 960), prepend_name="PP2_"))
+aktanishSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 1065), prepend_name="PP2_"))
+aktanishSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 1960), prepend_name="PP3_"))
+aktanishSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 2065), prepend_name="PP3_"))
+aktanishSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 2960), prepend_name="PP4_"))
+aktanishSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 3065), prepend_name="PP4_"))
+aktanishSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 3960), prepend_name="PP1_"))
+aktanishSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 4065), prepend_name="PP1_"))
+
+
+testSettings = []
+testSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(17, 3, 40960),))
+testSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(17, 3, 41065),))
 
 bolgarSettings = []
 common_data_name = {
     'morg': morgSettings,
     'bolgar': bolgarSettings,
     'aktanish': aktanishSettings,
+    'test':testSettings,
 }
 
 common_data_imei = {
     #'351513054631988':'bolgar',
     '351513054570863':'morg',
     '351513054687493':'aktanish',
+    '353173063444515':'test',
     }
 
 if __name__ == '__main__':
