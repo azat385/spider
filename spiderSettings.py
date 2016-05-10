@@ -349,6 +349,43 @@ aktanishSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 29
 aktanishSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 3065), prepend_name="PP4_"))
 aktanishSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 3960), prepend_name="PP1_"))
 aktanishSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 4065), prepend_name="PP1_"))
+#41115
+aktanish_PP1_additional = (
+{'id': 99 , 'type': flt32,	'saveTrigger': doNotSave,	'name': "ТЕ1 приток ГВС1",	},
+{'id': 100, 'type': flt32,	'saveTrigger': doNotSave,	'name': "ТЕ2 обр ГВС1",	},
+{'id': 101, 'type': flt32,	'saveTrigger': doNotSave,	'name': "ТЕ3 приток ГВС2",	},
+{'id': 102, 'type': flt32,	'saveTrigger': doNotSave,	'name': "ТЕ4 обр ГВС2",	},
+{'id': 103, 'type': flt32,	'saveTrigger': doNotSave,	'name': "Резерв AI4",	},
+{'id': 104, 'type': flt32,	'saveTrigger': doNotSave,	'name': "FT1 ppm",	},
+{'id': 105, 'type': int16,	'saveTrigger': doNotSave,	'name': "DI slave pixel",	},
+{'id': 106, 'type': int16,	'saveTrigger': doNotSave,	'name': "DO обр связь",	},
+{'id': 107, 'type': int32,	'saveTrigger': doNotSave,	'name': "Флаг32",	},
+{'id': 108, 'type': flt32,	'saveTrigger': doNotSave,	'name': "ГВС1 %%АО1",	},
+{'id': 109, 'type': flt32,	'saveTrigger': doNotSave,	'name': "ГВС2 %%АО2",	},
+{'id': 110, 'type': flt32,	'saveTrigger': doNotSave,	'name': "UT1 h",	},
+{'id': 111, 'type': flt32,	'saveTrigger': doNotSave,	'name': "UT1 t",	},
+{'id': 112, 'type': flt32,	'saveTrigger': doNotSave,	'name': "UT2 h",	},
+{'id': 113, 'type': flt32,	'saveTrigger': doNotSave,	'name': "UT2 t",	},
+{'id': 114, 'type': flt32,	'saveTrigger': doNotSave,	'name': "UT3 h",	},
+{'id': 115, 'type': flt32,	'saveTrigger': doNotSave,	'name': "UT3 t",	},
+{'id': 116, 'type': flt32,	'saveTrigger': doNotSave,	'name': "UT4 h",	},
+{'id': 117, 'type': flt32,	'saveTrigger': doNotSave,	'name': "UT4 t",	},
+{'id': 118, 'type': flt32,	'saveTrigger': doNotSave,	'name': "UT5 h",	},
+{'id': 119, 'type': flt32,	'saveTrigger': doNotSave,	'name': "UT5 t",	},
+{'id': 120, 'type': flt32,	'saveTrigger': doNotSave,	'name': "PE2 нагн",	},
+{'id': 121, 'type': flt32,	'saveTrigger': doNotSave,	'name': "РЕ3 всас",	},
+{'id': 122, 'type': flt32,	'saveTrigger': doNotSave,	'name': "UT1 H",	},
+{'id': 123, 'type': flt32,	'saveTrigger': doNotSave,	'name': "UT2 H",	},
+{'id': 124, 'type': flt32,	'saveTrigger': doNotSave,	'name': "UT3 H",	},
+{'id': 125, 'type': flt32,	'saveTrigger': doNotSave,	'name': "UT4 H",	},
+{'id': 126, 'type': flt32,	'saveTrigger': doNotSave,	'name': "UT5 H",	},
+{'id': 127, 'type': int16,	'saveTrigger': doNotSave,	'name': "KVS",	},
+{'id': 128, 'type': int16,	'saveTrigger': doNotSave,	'name': "RV4 переосуш",	},
+{'id': 129, 'type': int16,	'saveTrigger': doNotSave,	'name': "RV7 рециркуляция",	},
+{'id': 130, 'type': int16,	'saveTrigger': doNotSave,	'name': "ЖП",	},
+{'id': 131, 'type': int16,	'saveTrigger': doNotSave,	'name': "ЖВ",	},
+)
+aktanishSettings.append(form_std_settings(aktanish_PP1_additional, modbus_set=(4, 3, 4115), prepend_name="PP1_"))
 
 
 testSettings = []
