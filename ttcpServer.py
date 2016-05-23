@@ -20,6 +20,8 @@ class myArgs():
     delay = 5
     port = 14210
     delayBeforeDropConnection = 300
+    mc_delay_online = 600
+
 
 
 class authClass():
@@ -249,7 +251,7 @@ def printTuple(dataT, valT, strT, prependStr='', key_str_separater='.', val_str_
         formKeyStr = formKeyStr.replace(" ", "_")   #no blanks in key
         formValStr = "{}{}{}".format(value,val_str_separater, strT)
         print "{}={}".format(formKeyStr, formValStr)
-        mc.set(form_key_str(formKeyStr,onlineStr), formValStr)
+        mc.set(form_key_str(formKeyStr,onlineStr), formValStr, myArgs.mc_delay_online)
         #last saved values and append archiving
         if dataT[i]['saveTrigger']==onChange:
             #get last saved value
@@ -258,7 +260,7 @@ def printTuple(dataT, valT, strT, prependStr='', key_str_separater='.', val_str_
             lastSavedValue = mc.get(keyLastSaved)
             #print "value: {}".format(lastSavedValue)
             if lastSavedValue is None:
-                mc.set(keyLastSaved,formValStr)
+                mc.set(keyLastSaved, formValStr)
                 #print "Set {}={}".format(keyLastSaved,formValStr)
                 continue
             else:
@@ -270,10 +272,10 @@ def printTuple(dataT, valT, strT, prependStr='', key_str_separater='.', val_str_
                 delta_value, delta_time = dataT[i]['saveAttr']
                 if (abs(lastSaved_value-value)>delta_value) \
                     or (check_time_passed(t1=lastSaved_time, t2=strT, deltaSec=delta_time*60)):
-                    mc.set(keyLastSaved,formValStr)
+                    mc.set(keyLastSaved, formValStr)
                     appendKey = form_key_str(formKeyStr,archiveStr)
                     if mc.append(appendKey,';;;'+formValStr) is False:
-                        mc.set(appendKey,formValStr)
+                        mc.set(appendKey, formValStr)
 
 
 
