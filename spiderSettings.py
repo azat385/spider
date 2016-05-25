@@ -388,23 +388,23 @@ aktanish_PP1_additional = (
 aktanishSettings.append(form_std_settings(aktanish_PP1_additional, modbus_set=(4, 3, 4115), prepend_name="PP1_"))
 
 
-testSettings = []
-testSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(17, 3, 40960),))
-testSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(17, 3, 41065),))
+chuykovaSettings = []
+chuykovaSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(17, 3, 40960),))
+chuykovaSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(17, 3, 41065),))
 
 bolgarSettings = []
 common_data_name = {
     'morg': morgSettings,
     'bolgar': bolgarSettings,
     'aktanish': aktanishSettings,
-    'test':testSettings,
+    'chuykova':chuykovaSettings,
 }
 
 common_data_imei = {
     #'351513054631988':'bolgar',
     '351513054570863':'morg',
     '351513054687493':'aktanish',
-    '353173063444515':'test',
+    '353173063444515':'chuykova',
     }
 
 if __name__ == '__main__':

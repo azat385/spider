@@ -404,7 +404,14 @@ class SpiderFactory(protocol.ServerFactory):
 userDict = {'moshes': 'Happy', 'azat': 'Very happy', 'ruslan': '2 cildren'}
 
 application = service.Application('spider', uid=0, gid=0,)
-logfile = DailyLogFile("my.log", "logs/")
+import yaml
+with open("ttcpServer.yaml", 'r') as ymlfile:
+    cfg = yaml.load(ymlfile)
+log_settings = cfg['logs']
+log_fname = log_settings["name"] if "name" in log_settings else "my.log"
+log_path = log_settings["path"] if "path" in log_settings else "logs/"
+
+logfile = DailyLogFile(log_fname, log_path)
 application.setComponent(ILogObserver, FileLogObserver(logfile).emit)
 factory = SpiderFactory(**userDict)
 internet.TCPServer(myArgs.port, factory).setServiceParent(

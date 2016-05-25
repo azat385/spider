@@ -1,0 +1,4 @@
+logs:
+  path: /data/spider_log/
+  name: spider.log
+
