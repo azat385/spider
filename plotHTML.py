@@ -4,11 +4,12 @@
 import sqlite3
 from datetime import datetime
 
+base_path = "/home/ubuntu/spider/html/"
 db_name = '/home/ubuntu/spider/test1.db'
+
 conn = sqlite3.connect(db_name)
 conn.text_factory = str
 
-base_path = "/home/ubuntu/spider/html/"
 
 p = [
     'Давл_нагн',
@@ -86,7 +87,8 @@ for ss in settings:
 
 conn.close()
 
-
+if __name__ == '__main__':
+    pass
 
 
 
