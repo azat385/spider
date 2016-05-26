@@ -8,6 +8,8 @@ db_name = '/home/ubuntu/spider/test1.db'
 conn = sqlite3.connect(db_name)
 conn.text_factory = str
 
+base_path = "/home/ubuntu/spider/html/"
+
 p = [
     'Давл_нагн',
     'Темп_камеры',
@@ -35,6 +37,7 @@ def form_dict(name="morg.", prefix=arc_prefix, data_list=std_pxl_arc):
     d = {"path": dir_path}
     data = []
     tag_prefix = "{}{}".format(prefix, name)
+    tag_prefix = tag_prefix.replace("SCo_", "")
     d["tag_prefix"] = tag_prefix
     for l in data_list:
         data.append("{}{}".format(tag_prefix, l))
@@ -74,7 +77,6 @@ for ss in settings:
 
     from plotly.graph_objs import Scatter, Layout
     from plotly.offline import plot
-    base_path = "/home/ubuntu/spider/html/"
     add_path = ss['path']
     full_path = "{}{}".format(base_path,add_path)
     import os
