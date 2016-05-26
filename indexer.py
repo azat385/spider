@@ -12,7 +12,7 @@ time_str = date.today()
 time_str = time_str.isoformat()
 
 import glob2
-all_header_files = glob2.glob('{}**/*.html'.format(base_path))
+all_header_files = glob2.glob('{}**/{}'.format(base_path, file_name))
 print all_header_files
 
 if not all_header_files:
