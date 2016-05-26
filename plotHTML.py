@@ -37,7 +37,6 @@ def form_dict(name="morg.", prefix=arc_prefix, data_list=std_pxl_arc):
     d = {"path": dir_path}
     data = []
     tag_prefix = "{}{}".format(prefix, name)
-    tag_prefix = tag_prefix.replace("SCo_", "")
     d["tag_prefix"] = tag_prefix
     for l in data_list:
         data.append("{}{}".format(tag_prefix, l))
@@ -71,8 +70,9 @@ for ss in settings:
         #>>> lst=[[1,2,3],[11,12,13],[21,22,23]]
         #>>> zip(*lst)[0]
         #(1, 11, 21)
-
-        trace = dict(name=p1.replace(ss['tag_prefix'], ""), y=x1, x=y1)
+        cool_str_in_graph = p1.replace(ss['tag_prefix'], "")
+        cool_str_in_graph = cool_str_in_graph.replace("SCo_", "")
+        trace = dict(name=cool_str_in_graph, y=x1, x=y1)
         data.append(trace)
 
     from plotly.graph_objs import Scatter, Layout
