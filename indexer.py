@@ -18,4 +18,4 @@ print all_header_files
 import shutil
 for f_old in all_header_files:
     f_new = f_old.replace(file_name_sans_ext, time_str)
-    shutil.copy(f_old, f_new)
+    shutil.copyfile(f_old, f_new)
