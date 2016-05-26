@@ -55,7 +55,6 @@ for ss in settings:
     for p1 in p:
         c1 = conn.execute("SELECT  VALUE, STIME FROM RAWDATA WHERE NAME=? AND (STIME>= datetime('now','-1 day')) ORDER BY ID DESC",(p1,))
         f.append(c1.fetchall())
-    conn.close()
 
     if not f:
         continue
@@ -82,6 +81,10 @@ for ss in settings:
     if not os.path.isdir(full_path):
         os.makedirs(full_path)
     plot(data, filename='{}index.html'.format(full_path), auto_open=False, show_link=False)
+
+conn.close()
+
+
 
 
 
