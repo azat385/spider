@@ -15,7 +15,12 @@ import glob2
 all_header_files = glob2.glob('{}**/*.html'.format(base_path))
 print all_header_files
 
+if not all_header_files:
+    exit()
+import os
 import shutil
 for f_old in all_header_files:
     f_new = f_old.replace(file_name_sans_ext, time_str)
+    if os.path.exists(f_new):
+        os.remove(f_new)
     shutil.copyfile(f_old, f_new)
