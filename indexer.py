@@ -20,6 +20,8 @@ if not all_header_files:
 import os
 import shutil
 for f_old in all_header_files:
+    if f_old == base_path + file_name:
+	continue
     f_new = f_old.replace(file_name_sans_ext, time_str)
     if os.path.exists(f_new):
         os.remove(f_new)
