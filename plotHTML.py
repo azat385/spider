@@ -19,6 +19,22 @@ p = [
     't_комн_конд'
 ]
 
+f = [
+    "Уставка_копия",
+    "TE9_подача",
+    "TE8_обратка",
+    "TE1_нагн_1",
+    "TE2_всас_1",
+    "TE3_нагн_2",
+    "TE4_всас_2",
+    "TE5_конденсат",
+    "PE11_нагн_1",
+    "PE22_нагн_2",
+    "Вент_3%",
+    "Вент_6%",
+    "Pвсас_1",
+    "Pвсас_2",
+]
 std_pxl_arc = [
     "SCo_t_(наружная)",
     "SCo_t_(канала)",
@@ -49,7 +65,8 @@ settings = [
     form_dict(name="chuykova."),
     form_dict(name="aktanish.PP2_"),
     form_dict(name="aktanish.PP3_"),
-    form_dict(name="aktanish.PP4_")
+    form_dict(name="aktanish.PP4_"),
+    form_dict(name="fedos.",data_list=f),
 ]
 
 for ss in settings:
