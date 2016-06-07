@@ -388,9 +388,77 @@ aktanish_PP1_additional = (
 aktanishSettings.append(form_std_settings(aktanish_PP1_additional, modbus_set=(4, 3, 4115), prepend_name="PP1_"))
 
 
-chuykovaSettings = []
-chuykovaSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(17, 3, 40960),))
-chuykovaSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(17, 3, 41065),))
+chuykovaSettings = [form_std_settings(pixel_std_map[0], modbus_set=(17, 3, 40960), ),
+                    form_std_settings(pixel_std_map[1], modbus_set=(17, 3, 41065), )
+                    ]
+
+fedoseevskaya_data = (
+    {'id': 1 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "Счетчик",},
+    {'id': 2 , 'type': int16,	'saveTrigger': doNotSave,	'saveAttr': (0.3, 5,),		'name': "plain1",},
+    {'id': 3 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "Counter",},
+    {'id': 4 , 'type': int16,	'saveTrigger': doNotSave,	'saveAttr': (0.3, 5,),		'name': "plain2",},
+    {'id': 5 , 'type': int32,	'saveTrigger': doNotSave,	'saveAttr': (0.3, 5,),		'name': "plain3",},
+    {'id': 6 , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "Уставка_копия",},
+    {'id': 7 , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "TE9_подача",},
+    {'id': 8 , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "TE8_обратка",},
+    {'id': 9 , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "TE1_нагн_1",},
+    {'id': 10, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "TE2_всас_1",},
+    {'id': 11, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "TE3_нагн_2",},
+    {'id': 12, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "TE4_всас_2",},
+    {'id': 13, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "TE5_конденсат",},
+    {'id': 14, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "PE11_нагн_1",},
+    {'id': 15, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "PE22_нагн_2",},
+    {'id': 16, 'type': int16,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "Вент_3%",},
+    {'id': 17, 'type': int16,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "Вент_6%",},
+    {'id': 18, 'type': int32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "Флаги",},
+    {'id': 19, 'type': int32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "Аварии_1",},
+    {'id': 20, 'type': int32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "Аварии_2",},
+    {'id': 21, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "Pвсас_1",},
+    {'id': 22, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "Pвсас_2",},
+    {'id': 23, 'type': int32,	'saveTrigger': doNotSave,	'saveAttr': (0.3, 5,),		'name': "plain4",},
+    {'id': 24, 'type': int32,	'saveTrigger': doNotSave,	'saveAttr': (0.3, 5,),		'name': "plain5",},
+    {'id': 25, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_00",},
+    {'id': 26, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_01",},
+    {'id': 27, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_02",},
+    {'id': 28, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_03",},
+    {'id': 29, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_04",},
+    {'id': 30, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_05",},
+    {'id': 31, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_06",},
+    {'id': 32, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_07",},
+    {'id': 33, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_08",},
+    {'id': 34, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_09",},
+    {'id': 35, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_10",},
+    {'id': 36, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_11",},
+    {'id': 37, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_12",},
+    {'id': 38, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_13",},
+    {'id': 39, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_14",},
+    {'id': 40, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_15",},
+    {'id': 41, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "min_16",},
+    {'id': 42, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_00",},
+    {'id': 43, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_01",},
+    {'id': 44, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_02",},
+    {'id': 45, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_03",},
+    {'id': 46, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_04",},
+    {'id': 47, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_05",},
+    {'id': 48, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_06",},
+    {'id': 49, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_07",},
+    {'id': 50, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_08",},
+    {'id': 51, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_09",},
+    {'id': 52, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_10",},
+    {'id': 53, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_11",},
+    {'id': 54, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_12",},
+    {'id': 55, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_13",},
+    {'id': 56, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_14",},
+    {'id': 57, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_15",},
+    {'id': 58, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "max_16",},
+    {'id': 59, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "flg_00",},
+    {'id': 60, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "flg_01",},
+    {'id': 61, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "flg_02",},
+    {'id': 62, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "flg_03",},
+    {'id': 63, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "flg_04",},
+    {'id': 64, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "flg_05",},
+)
+fedoseevskayaSettings = [form_std_settings(fedoseevskaya_data, modbus_set=(4, 3, 94), )]
 
 bolgarSettings = []
 common_data_name = {
@@ -398,14 +466,20 @@ common_data_name = {
     'bolgar': bolgarSettings,
     'aktanish': aktanishSettings,
     'chuykova':chuykovaSettings,
+    'fedos':fedoseevskayaSettings,
 }
 
 common_data_imei = {
     #'351513054631988':'bolgar',
+    '353173062414303':'fedos',
     '351513054570863':'morg',
     '351513054687493':'aktanish',
     '353173063444515':'chuykova',
     }
 
 if __name__ == '__main__':
+    hexString = lambda byteString : " ".join(x.encode('hex') for x in byteString)
+    decString = lambda byteString : " ".join(str(int(x.encode('hex'), 16)) for x in byteString)
+    print "hex:", hexString(fedoseevskayaSettings[0]['settings']['request'])
+    print "dec:", decString(fedoseevskayaSettings[0]['settings']['request'])
     pass
