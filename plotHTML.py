@@ -82,13 +82,15 @@ def form_dict(name="morg.", prefix=arc_prefix, data_list=std_pxl_arc):
     return d
 
 settings = [
-    form_dict(name="morg.",data_list=p),
+    form_dict(name="morg.", data_list=p),
     form_dict(name="chuykova."),
     form_dict(name="aktanish.PP1_", data_list=add_aktanish_PP1_arc),
     form_dict(name="aktanish.PP2_"),
     form_dict(name="aktanish.PP3_"),
     form_dict(name="aktanish.PP4_"),
-    form_dict(name="fedos.",data_list=f),
+    form_dict(name="fedos.", data_list=f),
+    form_dict(name="test.PV1_"),
+    form_dict(name="test.PV2_"),
 ]
 
 for ss in settings:
