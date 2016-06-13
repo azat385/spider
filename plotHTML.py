@@ -44,7 +44,29 @@ std_pxl_arc = [
     "SCo_Уставка_t",
     "SCo_%ВП",
     "SCo_%ВВ",
+    "FT1_ppm"
 ]
+add_aktanish_PP1_arc = [
+    "FT1_ppm",
+    "UT1_h",
+    "UT1_t",
+    "UT2_h",
+    "UT2_t",
+    "UT3_h",
+    "UT3_t",
+    "UT4_h",
+    "UT4_t",
+    "UT5_h",
+    "UT5_t",
+    "PE2_нагн",
+    "РЕ3_всас",
+    "UT1_H",
+    "UT2_H",
+    "UT3_H",
+    "UT4_H",
+    "UT5_H",
+]
+add_aktanish_PP1_arc = std_pxl_arc + add_aktanish_PP1_arc
 arc_prefix = "archive_"
 
 
@@ -63,6 +85,7 @@ def form_dict(name="morg.", prefix=arc_prefix, data_list=std_pxl_arc):
 settings = [
     form_dict(name="morg.",data_list=p),
     form_dict(name="chuykova."),
+    form_dict(name="aktanish.PP1_", data_list=add_aktanish_PP1_arc),
     form_dict(name="aktanish.PP2_"),
     form_dict(name="aktanish.PP3_"),
     form_dict(name="aktanish.PP4_"),

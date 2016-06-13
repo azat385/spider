@@ -459,23 +459,30 @@ fedoseevskaya_data = (
     {'id': 64, 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.3, 5,),		'name': "flg_05",},
 )
 fedoseevskayaSettings = [form_std_settings(fedoseevskaya_data, modbus_set=(4, 3, 94), )]
+testSettings = [
+    form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 40960), prepend_name="PV1_"),
+    form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 41065), prepend_name="PV1_"),
+    form_std_settings(pixel_std_map[0], modbus_set=(7, 3, 40960), prepend_name="PV2_"),
+    form_std_settings(pixel_std_map[1], modbus_set=(7, 3, 41065), prepend_name="PV2_"),
+]
 
 bolgarSettings = []
 common_data_name = {
     'morg': morgSettings,
     'bolgar': bolgarSettings,
     'aktanish': aktanishSettings,
-    'chuykova':chuykovaSettings,
-    'fedos':fedoseevskayaSettings,
+    'chuykova': chuykovaSettings,
+    'fedos': fedoseevskayaSettings,
+    'test': testSettings,
 }
 
 common_data_imei = {
     #'351513054631988':'bolgar',
-    '353173067390771':'fedos', #fake for test
-    '353173062414303':'fedos1',
-    '351513054570863':'morg',
-    '351513054687493':'aktanish',
-    '353173063444515':'chuykova',
+    '353173067390771': 'test', #fake for test --> ЦПК
+    '353173062414303': 'fedos',
+    '351513054570863': 'morg',
+    '351513054687493': 'aktanish',
+    '353173063444515': 'chuykova',
     }
 
 if __name__ == '__main__':
