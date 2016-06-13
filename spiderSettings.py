@@ -471,7 +471,8 @@ common_data_name = {
 
 common_data_imei = {
     #'351513054631988':'bolgar',
-    '353173062414303':'fedos',
+    '353173067390771':'fedos', #fake for test
+    '353173062414303':'fedos1',
     '351513054570863':'morg',
     '351513054687493':'aktanish',
     '353173063444515':'chuykova',
