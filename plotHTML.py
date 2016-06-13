@@ -44,7 +44,6 @@ std_pxl_arc = [
     "SCo_Уставка_t",
     "SCo_%ВП",
     "SCo_%ВВ",
-    "FT1_ppm"
 ]
 add_aktanish_PP1_arc = [
     "FT1_ppm",
