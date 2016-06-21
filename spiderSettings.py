@@ -466,6 +466,11 @@ testSettings = [
     form_std_settings(pixel_std_map[1], modbus_set=(7, 3, 41065), prepend_name="PV2_"),
 ]
 
+sterlitamakSettings = [
+    form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 40960), prepend_name="RT1_"),
+    form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 41065), prepend_name="RT1_"),
+]
+
 bolgarSettings = []
 common_data_name = {
     'morg': morgSettings,
@@ -474,6 +479,7 @@ common_data_name = {
     'chuykova': chuykovaSettings,
     'fedos': fedoseevskayaSettings,
     'test': testSettings,
+    'sterlitamak': sterlitamakSettings,
 }
 
 common_data_imei = {
@@ -483,7 +489,8 @@ common_data_imei = {
     '351513054570863': 'morg',
     '351513054687493': 'aktanish',
     '353173063444515': 'chuykova',
-    }
+    '353173067393130': 'sterlitamak',
+}
 
 if __name__ == '__main__':
     hexString = lambda byteString : " ".join(x.encode('hex') for x in byteString)
