@@ -466,16 +466,12 @@ testSettings = [
     form_std_settings(pixel_std_map[1], modbus_set=(7, 3, 41065), prepend_name="PV2_"),
 ]
 
-sterlitamakSettings = [
-    form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 960),  prepend_name="RT1_"),
-    form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 1065), prepend_name="RT1_"),
-    form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 1960), prepend_name="RT2_"),
-    form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 2065), prepend_name="RT2_"),
-    form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 2960), prepend_name="RT3_"),
-    form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 3065), prepend_name="RT3_"),
-    form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 3960), prepend_name="RT4_"),
-    form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 4065), prepend_name="RT4_"),
-]
+sterlitamakSettings = []
+sterlitamakStep = 500
+sterlitamakInit = 1000
+for n in range(1, 22):
+    sterlitamakSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(4, 3, sterlitamakInit + (n - 1) * sterlitamakStep), prepend_name="RT{}_".format(n)))
+    sterlitamakSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(4, 3, sterlitamakInit + (n - 1) * sterlitamakStep + 105), prepend_name="RT{}_".format(n)))
 
 bolgarSettings = []
 common_data_name = {
