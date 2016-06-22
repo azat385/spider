@@ -467,8 +467,14 @@ testSettings = [
 ]
 
 sterlitamakSettings = [
-    form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 40960), prepend_name="RT1_"),
-    form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 41065), prepend_name="RT1_"),
+    form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 960),  prepend_name="RT1_"),
+    form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 1065), prepend_name="RT1_"),
+    form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 1960), prepend_name="RT2_"),
+    form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 2065), prepend_name="RT2_"),
+    form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 2960), prepend_name="RT3_"),
+    form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 3065), prepend_name="RT3_"),
+    form_std_settings(pixel_std_map[0], modbus_set=(4, 3, 3960), prepend_name="RT4_"),
+    form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 4065), prepend_name="RT4_"),
 ]
 
 bolgarSettings = []
