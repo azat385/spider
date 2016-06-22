@@ -467,8 +467,8 @@ testSettings = [
 ]
 
 sterlitamakSettings = []
-sterlitamakStep = 500
-sterlitamakInit = 1000
+sterlitamakStep = 400
+sterlitamakInit = 200
 for n in range(1, 22):
     sterlitamakSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(4, 3, sterlitamakInit + (n - 1) * sterlitamakStep), prepend_name="RT{}_".format(n)))
     sterlitamakSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(4, 3, sterlitamakInit + (n - 1) * sterlitamakStep + 105), prepend_name="RT{}_".format(n)))
