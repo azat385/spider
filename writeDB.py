@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from mcStat import getKeys
+mcKeyLimit = 1000
 
 import memcache
 mc = memcache.Client(['127.0.0.1:11211'], debug=0)
@@ -69,7 +70,7 @@ if __name__ == '__main__':
     from time import sleep
 
     while 1:
-        top100keys = getKeys(limit=200)
+        top100keys = getKeys(limit=mcKeyLimit)
         for key in top100keys:
             if "archive" in key:
                 for _ in xrange(5):
