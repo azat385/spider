@@ -79,11 +79,11 @@ if __name__ == '__main__':
                         if mc.cas(key, ''):
                             arr = get_data_array(val)
                             if arr is not None:
-                                write_data_to_db(key,arr)
-                            break
+                                try:
+                                    write_data_to_db(key,arr)
+                                except:
+                                    print "smthing wrong with db!"
         for i in xrange(180):
             if not i%10:
-		print i
+                print i
             sleep(1)
-
-
