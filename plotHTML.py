@@ -91,6 +91,7 @@ settings = [
     form_dict(name="fedos.", data_list=f),
     form_dict(name="test.PV1_"),
     form_dict(name="test.PV2_"),
+    form_dict(name="mavl.PV11_"),
 ]
 
 for ss in settings:

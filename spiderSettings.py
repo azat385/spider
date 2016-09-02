@@ -473,6 +473,10 @@ for n in range(1, 22):
     sterlitamakSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(4, 3, sterlitamakInit + (n - 1) * sterlitamakStep), prepend_name="RT{}_".format(n)))
     sterlitamakSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(4, 3, sterlitamakInit + (n - 1) * sterlitamakStep + 105), prepend_name="RT{}_".format(n)))
 
+mavlSettings = [form_std_settings(pixel_std_map[0], modbus_set=(11, 3, 40960), prepend_name="PV11_"),
+                form_std_settings(pixel_std_map[1], modbus_set=(11, 3, 41065), prepend_name="PV11_")
+                ]
+
 bolgarSettings = []
 common_data_name = {
     'morg': morgSettings,
@@ -482,6 +486,7 @@ common_data_name = {
     'fedos': fedoseevskayaSettings,
     'test': testSettings,
     'sterlitamak': sterlitamakSettings,
+    'mavl': mavlSettings,
 }
 
 common_data_imei = {
@@ -492,6 +497,7 @@ common_data_imei = {
     '351513054687493': 'aktanish',
     '353173063444515': 'chuykova',
     '353173067393130': 'sterlitamak',
+    '351513052870364': 'mavl',
 }
 
 if __name__ == '__main__':
