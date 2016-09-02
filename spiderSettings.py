@@ -473,8 +473,8 @@ for n in range(1, 22):
     sterlitamakSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(4, 3, sterlitamakInit + (n - 1) * sterlitamakStep), prepend_name="RT{}_".format(n)))
     sterlitamakSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(4, 3, sterlitamakInit + (n - 1) * sterlitamakStep + 105), prepend_name="RT{}_".format(n)))
 
-mavlSettings = [form_std_settings(pixel_std_map[0], modbus_set=(11, 3, 40960), prepend_name="PV11_"),
-                form_std_settings(pixel_std_map[1], modbus_set=(11, 3, 41065), prepend_name="PV11_")
+mavlSettings = [form_std_settings(pixel_std_map[0], modbus_set=(11, 3, 960), prepend_name="PV11_"),
+                form_std_settings(pixel_std_map[1], modbus_set=(11, 3, 1065), prepend_name="PV11_")
                 ]
 
 bolgarSettings = []
