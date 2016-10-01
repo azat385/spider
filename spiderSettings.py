@@ -477,6 +477,28 @@ mavlSettings = [form_std_settings(pixel_std_map[0], modbus_set=(11, 3, 960), pre
                 form_std_settings(pixel_std_map[1], modbus_set=(11, 3, 1065), prepend_name="PV11_")
                 ]
 
+almet_data = (
+    {'id': 1  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "MinTуст",},
+    {'id': 2  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "MaxTуст",},
+    {'id': 3  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "MinTдатч",},
+    {'id': 4  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "MaxTдатч",},
+    {'id': 5  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "MinРнагн",},
+    {'id': 6  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "MaxРнагн",},
+    {'id': 7  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "MinРвсас",},
+    {'id': 8  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "MaxРвсас",},
+    {'id': 9  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "MinТнагн",},
+    {'id': 10 , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "MaxTнагн",},
+    {'id': 11 , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "EKD_u20_S2_Temp",},
+    {'id': 12 , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "EKD_u21_Superheat",},
+    {'id': 13 , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "EKD_u22_SuperheatRef",},
+    {'id': 14 , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "EKD_u24_Opening_OD",},
+    {'id': 15 , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "EKD_u25_EvapPres_Pe",},
+    {'id': 16 , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "EKD_u26_EvapTemp_Te",},
+    {'id': 17 , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "EKD_u27_Temp_S3",},
+    )
+
+almetSettings = [form_std_settings(almet_data, modbus_set=(5, 3, 110), )]
+
 bolgarSettings = []
 common_data_name = {
     'morg': morgSettings,
@@ -487,6 +509,7 @@ common_data_name = {
     'test': testSettings,
     'sterlitamak': sterlitamakSettings,
     'mavl': mavlSettings,
+    'almet': almetSettings,
 }
 
 common_data_imei = {
@@ -498,6 +521,7 @@ common_data_imei = {
     '353173063444515': 'chuykova',
     '353173067393130': 'sterlitamak',
     '351513052870364': 'mavl',
+    '355234054969205': 'almet',
 }
 
 if __name__ == '__main__':
