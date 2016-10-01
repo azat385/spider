@@ -514,7 +514,7 @@ almet_data = (
         {'id': 14 , 'type': int32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Флаги 1",},
         {'id': 15 , 'type': int32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Флаги 2",},
         {'id': 16 , 'type': int32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Аварии",},
-        {'id': 17 , 'type': int32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "ФлагВент",},
+        {'id': 17 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "ФлагВент",},
         {'id': 18 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "ПЧ_проценты",},
         {'id': 19 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Флаг4",},
         {'id': 20 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Флаг5",},
