@@ -66,6 +66,39 @@ add_aktanish_PP1_arc = [
     "UT5_H",
 ]
 add_aktanish_PP1_arc = std_pxl_arc + add_aktanish_PP1_arc
+
+almet_list = [
+    "T_глик_с_поля",
+    "T_глик_на_поле",
+    "Tемпература_поля",
+    "Давление_всасывания",
+    "Давление_нагнетания",
+    "Tемпература_всас_компрес 1",
+    "Tемпература_нагн_комп 1",
+    "Т_улица",
+    "Т_масла",
+    "Вентиляторы_итого",
+    "Компрессоры_итого",
+    "Компрессор1",
+    "Компрессор2",
+    "Компрессор3",
+    "MinTуст",
+    "MaxTуст",
+    "MinTдатч",
+    "MaxTдатч",
+    "MinРнагн",
+    "MaxРнагн",
+    "MinРвсас",
+    "MaxРвсас",
+    "MinТнагн",
+    "MaxTнагн",
+    "EKD_u20_S2_Temp",
+    "EKD_u21_Superheat",
+    "EKD_u22_SuperheatRef",
+    "EKD_u24_Opening_OD",
+    "EKD_u25_EvapPres_Pe",
+    "EKD_u26_EvapTemp_Te",
+]
 arc_prefix = "archive_"
 
 
@@ -92,6 +125,7 @@ settings = [
     form_dict(name="test.PV1_"),
     form_dict(name="test.PV2_"),
     form_dict(name="mavl.PV11_"),
+    form_dict(name="almet.", data_list=almet_list)
 ]
 
 for ss in settings:
