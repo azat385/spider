@@ -98,6 +98,11 @@ almet_list = [
     "EKD_u24_Opening_OD",
     "EKD_u25_EvapPres_Pe",
     "EKD_u26_EvapTemp_Te",
+    "ВентОбщ",
+    "СтупеньРегул",
+    "ТемпВагон",
+    "ТемпШкаф",
+
 ]
 arc_prefix = "archive_"
 
