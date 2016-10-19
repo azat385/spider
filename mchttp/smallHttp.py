@@ -63,30 +63,47 @@ def getData():
     mc = memcache.Client(['127.0.0.1:11211'], debug=0)
 
     almet_list = [
-        "T_глик_с_поля",
-        "T_глик_на_поле",
-        "Tемпература_поля",
-        "Давление_всасывания",
-        "Давление_нагнетания",
+        ["T_глик_с_поля",           "Т гликоля с поля",     "°C",],
+        ["T_глик_на_поле",          "Т гликоля на поле",     "°C",],
+        ["Tемпература_поля",        "Т льда",     "°C",],
+        ["Давление_всасывания",     "Р фреона всасывания ",     "Бар",],
+        ["Давление_нагнетания",     "Р фреона нагнетания",     "Бар",],
     ]
 
     arc_prefix = "online_"
 
-    almet_list = ["{}almet.{}".format(arc_prefix, a) for a in almet_list]
+    almet_col = [row[0] for row in almet_list]
+
+    almet_col = ["{}almet.{}".format(arc_prefix, a) for a in almet_col]
 
 
-    resultDict = mc.get_multi(almet_list)
+    resultDict = mc.get_multi(almet_col)
     resultStr = ""
+
+    import humanize
+    from datetime import datetime
+
+    _t = humanize.i18n.activate('ru_RU')
+
     for key, value in resultDict.iteritems():
-            resultStr += "{} = {}<br>\n".format(key, value)
+            if key in almet_col:
+                pos = almet_col.index(key)
+                v = value.split(";")
+                v_float, v_time = v
+                v_float = round(float(v_float), 2) #val = float("{0:.2f}".format(float(v[0])))
+                v_time = datetime.strptime(v_time,"%Y-%m-%d %H:%M:%S.%f")
+                v_time_str = humanize.naturaltime(datetime.now() - v_time)
+                resultStr += "{} = {}{} {}<br>\n".format(almet_list[pos][1], v_float, almet_list[pos][2], v_time_str)
+
+    humanize.i18n.deactivate()
     print resultStr
     return resultStr.decode('utf-8')
 
 if __name__ == '__main__':
 
-    debug = False
-    if debug:
-        allText(debug=debug)
+    DEBUG = False
+    if DEBUG:
+        allText(debug=DEBUG)
         exit()
 
     server_class = BaseHTTPServer.HTTPServer
@@ -98,3 +115,5 @@ if __name__ == '__main__':
         pass
     httpd.server_close()
     print time.asctime(), "Server Stops - %s:%s" % (HOST_NAME, PORT_NUMBER)
+
+
