@@ -1,4 +1,6 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
+
 import time
 import BaseHTTPServer
 
@@ -13,7 +15,7 @@ PORT_NUMBER = 8000 # Maybe set this to 9000.
 
 
 class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
-    log_file = open("mchttp.log", mode="w",)
+    log_file = open("mchttp.log", mode="a",)
 
     def log_message(self, format, *args):
         self.log_file = open("mchttp.log", mode="a",)
@@ -40,7 +42,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         s.wfile.write(txt)
 
 
-def allText(debug=False, path=''):
+def allText(debug=False, path='/almet'):
     path = path.split("/")[1]
 
     from urllib import unquote
@@ -49,7 +51,8 @@ def allText(debug=False, path=''):
     from mako.template import Template
     name1 = 'Pylons Developer'
     mytemplate = Template(filename='base.html', input_encoding='utf-8')
-    text = mytemplate.render(name=name1, path=path, text=getData())
+    text1 = getData()
+    text = mytemplate.render(name=name1, path=path, text=text1)
     if debug:
         print text
     return text.encode('utf-8')
@@ -75,9 +78,9 @@ def getData():
     resultDict = mc.get_multi(almet_list)
     resultStr = ""
     for key, value in resultDict.iteritems():
-            resultStr += "{} = {}\n".format(key, value)
-
-    return resultStr
+            resultStr += "{} = {}<br>\n".format(key, value)
+    print resultStr
+    return resultStr.decode('utf-8')
 
 if __name__ == '__main__':
 
