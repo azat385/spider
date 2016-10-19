@@ -9,7 +9,7 @@ from mcStat import getArray
 
 
 HOST_NAME ='0.0.0.0' # !!!REMEMBER TO CHANGE THIS!!!
-PORT_NUMBER = 8081 # Maybe set this to 9000.
+PORT_NUMBER = 8000 # Maybe set this to 9000.
 
 
 class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
@@ -32,46 +32,60 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         s.send_response(200)
         s.send_header("Content-type", "text/html")
         s.end_headers()
-        s.wfile.write("""
-        <html>
-            <head><title>Title goes here.</title>
-                <meta charset="utf-8">
-                <meta http-equiv="refresh" content="60">
-                <!-- Latest compiled and minified CSS -->
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-                <!-- Optional theme -->
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
-                <!-- Latest compiled and minified JavaScript -->
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-        </head>
-        """)
-        s.wfile.write("<body><p>This is a test.</p>")
-        s.wfile.write("<p>You accessed path: {}</p>".format(s.path) )
+        #s.wfile.write("<p>You accessed path: {}</p>".format(s.path) )
         #print(str(s.path).decode('cp1251'))
-        s.wfile.write("<p>You accessed path: %s</p>" % 'на русском')
+        #s.wfile.write("<p>You accessed path: %s</p>" % 'на русском')
+        txt = allText(path=s.path)
+        print txt
+        s.wfile.write(txt)
 
-        s.wfile.write("""
-            <body>
-                <div class="table-responsive">
-                <table class="table table-striped table-hover">
-        """)
-        i = 0
-        for k,vT in getArray():
-            s.wfile.write("<tr>")
-            for cell in ((i,k) + vT):
-                s.wfile.write("<td>{}</td>".format(cell))
-            s.wfile.write("</tr>\n")
-            i+=1
 
-        s.wfile.write("""
-                </table>
-                </div>
-            </body>
-        </html>""")
+def allText(debug=False, path=''):
+    path = path.split("/")[1]
+
+    from urllib import unquote
+    path = unquote(path).decode('utf8')
+
+    from mako.template import Template
+    name1 = 'Pylons Developer'
+    mytemplate = Template(filename='base.html', input_encoding='utf-8')
+    text = mytemplate.render(name=name1, path=path, text=getData())
+    if debug:
+        print text
+    return text.encode('utf-8')
+
+
+def getData():
+    import memcache
+    mc = memcache.Client(['127.0.0.1:11211'], debug=0)
+
+    almet_list = [
+        "T_глик_с_поля",
+        "T_глик_на_поле",
+        "Tемпература_поля",
+        "Давление_всасывания",
+        "Давление_нагнетания",
+    ]
+
+    arc_prefix = "online_"
+
+    almet_list = ["{}almet.{}".format(arc_prefix, a) for a in almet_list]
+
+
+    resultDict = mc.get_multi(almet_list)
+    resultStr = ""
+    for key, value in resultDict.iteritems():
+            resultStr += "{} = {}\n".format(key, value)
+
+    return resultStr
 
 if __name__ == '__main__':
+
+    debug = False
+    if debug:
+        allText(debug=debug)
+        exit()
+
     server_class = BaseHTTPServer.HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), MyHandler)
     print time.asctime(), "Server Starts - %s:%s" % (HOST_NAME, PORT_NUMBER)
