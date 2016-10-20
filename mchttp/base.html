@@ -17,16 +17,41 @@
 
 </head>
 <body>
+    <!--
     <p>This is a test.</p>
-    <p>Your name: ${name}</p>
+    <p>Your name: ${name1}</p>
     <p>You accessed path: русский</p>
     <p>You accessed path: ${path}</p>
     <p>You data:<br> ${text}</p>
+    -->
+    <div class="container">
+        <h2>Данные по объекту ${name1}</h2>
+        <p>Данные обновляются онлайн</p>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Параметр</th>
+                        <th>Значение</th>
+                        <th>Время</th>
+                        <th>Дата и время (подробно)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    % for row in rows:
+                        ${makerow(row)}
+                    % endfor
+                </tbody>
+            </table>
+        </div>
+    </div>>
+    <%def name="makerow(row)">
+        <tr>
+        % for name in row:
+            <td>${name}</td>\
+        % endfor
+        </tr>
+    </%def>
 
-    <div class="table-responsive">
-        <table class="table table-striped table-hover">
-
-        </table>
-    </div>
 </body>
 </html>
