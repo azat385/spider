@@ -48,8 +48,8 @@ def allText(path='/almet'):
     from mako.template import Template
     name1 = "Юбилейный".decode('utf-8')
     mytemplate = Template(filename='base.html', input_encoding='utf-8')
-    text1, commonData1 = getData()
-    text = mytemplate.render(commonData=commonData1, rows=text1)
+    commonData1, textSmall, textBig = getData()
+    text = mytemplate.render(commonData=commonData1, rowsS=textSmall, rowsB=textBig)
     if DEBUG:
         print text
     return text.encode('utf-8')
@@ -64,36 +64,43 @@ def getData():
     with open("data.yaml", 'r') as ymlfile:
         cfg = yaml.load(ymlfile)
 
-    almet_list = cfg['almet']['list']
-    almet_common = cfg['almet']['common']
-    arc_prefix = "online_"
-    almet_col = [row[0] for row in almet_list]
-    almet_col = ["{}almet.{}".format(arc_prefix, a.encode('utf-8')) for a in almet_col]
+    objName = 'almet'
+    almet_common = cfg[objName]['common']
 
+    def getMCdata(almet_list):
+        arc_prefix = "online_"
+        almet_col = [row[0] for row in almet_list]
+        almet_col = ["{}{}.{}".format(arc_prefix, objName, a.encode('utf-8')) for a in almet_col]
 
-    resultDict = mc.get_multi(almet_col)
-    resultList = []
+        resultDict = mc.get_multi(almet_col)
+        resultList = []
 
-    import humanize
-    _t = humanize.i18n.activate('ru_RU')
-    from datetime import datetime
+        import humanize
+        _t = humanize.i18n.activate('ru_RU')
+        from datetime import datetime
 
-    for key, value in resultDict.iteritems():
-            if key in almet_col:
-                pos = almet_col.index(key)
-                v = value.split(";")
-                v_float, v_time = v
-                v_float = round(float(v_float), 2) #val = float("{0:.2f}".format(float(v[0])))
-                v_time_full = v_time
-                v_time = datetime.strptime(v_time,"%Y-%m-%d %H:%M:%S.%f")
-                v_time_str = humanize.naturaltime(datetime.now() - v_time)
-                resultList.append([almet_list[pos][1], "{} {}".format(v_float, almet_list[pos][2].encode('utf-8')).decode('utf-8'), v_time_str.decode('utf-8'), v_time_full])
-                #resultStr += "{} = {}{} {}<br>\n".format(almet_list[pos][1], v_float, almet_list[pos][2], v_time_str)
+        for key, value in resultDict.iteritems():
+                if key in almet_col:
+                    pos = almet_col.index(key)
+                    v = value.split(";")
+                    v_float, v_time = v
+                    v_float = round(float(v_float), 2) #val = float("{0:.2f}".format(float(v[0])))
+                    v_time_full = v_time
+                    v_time = datetime.strptime(v_time,"%Y-%m-%d %H:%M:%S.%f")
+                    v_time_str = humanize.naturaltime(datetime.now() - v_time)
+                    resultList.append([almet_list[pos][1], "{} {}".format(v_float, almet_list[pos][2].encode('utf-8')).decode('utf-8'), v_time_str.decode('utf-8'), v_time_full])
+                    #resultStr += "{} = {}{} {}<br>\n".format(almet_list[pos][1], v_float, almet_list[pos][2], v_time_str)
 
-    humanize.i18n.deactivate()
-    resultList.sort()
-    print resultList
-    return resultList, almet_common
+        humanize.i18n.deactivate()
+        resultList.sort()
+        if DEBUG:
+            print resultList
+        return resultList
+
+    resultListSmall = getMCdata(almet_list=cfg[objName]['small'])
+    resultListBig = getMCdata(almet_list=cfg[objName]['big'])
+
+    return almet_common, resultListSmall, resultListBig
 
 if __name__ == '__main__':
 
