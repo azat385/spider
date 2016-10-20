@@ -39,7 +39,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         s.wfile.write(txt)
 
 
-def allText( path='/almet'):
+def allText(path='/almet'):
     path = path.split("/")[1]
 
     from urllib import unquote
@@ -48,8 +48,8 @@ def allText( path='/almet'):
     from mako.template import Template
     name1 = "Юбилейный".decode('utf-8')
     mytemplate = Template(filename='base.html', input_encoding='utf-8')
-    text1 = getData()
-    text = mytemplate.render(name1=name1, path=path, text="dvvd", rows=text1)
+    text1, commonData1 = getData()
+    text = mytemplate.render(commonData=commonData1, rows=text1)
     if DEBUG:
         print text
     return text.encode('utf-8')
@@ -59,22 +59,16 @@ def getData():
     import memcache
     mc = memcache.Client(['127.0.0.1:11211'], debug=0)
 
-    almet_list = [
-        ["T_глик_с_поля",           "Т гликоля с поля",     "°C",],
-        ["T_глик_на_поле",          "Т гликоля на поле",     "°C",],
-        ["Tемпература_поля",        "Т льда",     "°C",],
-        ["Давление_всасывания",     "Р фреона всасывания ",     "Бар",],
-        ["Давление_нагнетания",     "Р фреона нагнетания",     "Бар",],
-        ["Компрессор1",     "Компрессор 1",     "%",],
-        ["Компрессор2",     "Компрессор 2",     "%",],
-        ["Компрессор3",     "Компрессор 3",     "%",],
-    ]
+    import yaml
 
+    with open("data.yaml", 'r') as ymlfile:
+        cfg = yaml.load(ymlfile)
+
+    almet_list = cfg['almet']['list']
+    almet_common = cfg['almet']['common']
     arc_prefix = "online_"
-
     almet_col = [row[0] for row in almet_list]
-
-    almet_col = ["{}almet.{}".format(arc_prefix, a) for a in almet_col]
+    almet_col = ["{}almet.{}".format(arc_prefix, a.encode('utf-8')) for a in almet_col]
 
 
     resultDict = mc.get_multi(almet_col)
@@ -93,13 +87,13 @@ def getData():
                 v_time_full = v_time
                 v_time = datetime.strptime(v_time,"%Y-%m-%d %H:%M:%S.%f")
                 v_time_str = humanize.naturaltime(datetime.now() - v_time)
-                resultList.append([almet_list[pos][1].decode('utf-8'), "{} {}".format(v_float, almet_list[pos][2]).decode('utf-8'), v_time_str.decode('utf-8'), v_time_full])
+                resultList.append([almet_list[pos][1], "{} {}".format(v_float, almet_list[pos][2].encode('utf-8')).decode('utf-8'), v_time_str.decode('utf-8'), v_time_full])
                 #resultStr += "{} = {}{} {}<br>\n".format(almet_list[pos][1], v_float, almet_list[pos][2], v_time_str)
 
     humanize.i18n.deactivate()
     resultList.sort()
     print resultList
-    return resultList
+    return resultList, almet_common
 
 if __name__ == '__main__':
 
