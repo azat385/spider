@@ -97,6 +97,7 @@ def getData():
                 #resultStr += "{} = {}{} {}<br>\n".format(almet_list[pos][1], v_float, almet_list[pos][2], v_time_str)
 
     humanize.i18n.deactivate()
+    resultList.sort()
     print resultList
     return resultList
 
