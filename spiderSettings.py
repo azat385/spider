@@ -561,11 +561,30 @@ almet_data = (
         {'id': 9  , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "ГМ_флаги",},
         {'id': 10 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "ГМ_var1",},
         {'id': 11 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "ГМ_var2",},
+    ),
+    (
+        {'id': 1  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Темп_ГВС_приток",},
+        {'id': 2  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Темп_ГВС_обратка",},
+        {'id': 3  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Темп_заправки",},
+        {'id': 4  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Темп_Бака",},
+        {'id': 5  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Темп_Бак_обр",},
+        {'id': 6  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Темп_Яма",},
+        {'id': 7  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Темп_Яма_обр",},
+        {'id': 8  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Темп_Поля_обр",},
+        {'id': 9  , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Темп_Поля",},
+        {'id': 10 , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Темп_воздух_над_полем",},
+        {'id': 11 , 'type': int32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Флаг1",},
+        {'id': 12 , 'type': int32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "Флаг2",},
+        {'id': 13 , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "АО1%%_3х_ходов",},
+        {'id': 14 , 'type': flt32,	'saveTrigger': onChange,	'saveAttr': (0.1, 5,),		'name': "АО2%%_RV3",},
+
     )
+
 )
 almetSettings = [form_std_settings(almet_data[0], modbus_set=(5, 3, 110), ),
                  form_std_settings(almet_data[1], modbus_set=(5, 3, 1), ),
                  form_std_settings(almet_data[2], modbus_set=(5, 3, 200), ),
+                 form_std_settings(almet_data[3], modbus_set=(5, 3, 300), ),
                  ]
 
 bolgarSettings = []
