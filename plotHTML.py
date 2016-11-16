@@ -4,7 +4,7 @@
 import sqlite3
 from datetime import datetime
 
-base_path = "/home/ubuntu/spider/html/"
+base_path = "/data/spider_html/"
 db_name = '/home/ubuntu/spider/test1.db'
 
 conn = sqlite3.connect(db_name)
@@ -137,7 +137,7 @@ for ss in settings:
     p = ss['data']
     f = []
     for p1 in p:
-        c1 = conn.execute("SELECT  VALUE, STIME FROM RAWDATA WHERE NAME=? AND (STIME>= datetime('now','-1 day')) ORDER BY ID DESC",(p1,))
+        c1 = conn.execute("SELECT  VALUE, STIME FROM RAWDATA WHERE NAME=? AND (STIME>= datetime('now','-2 day')) ORDER BY ID DESC",(p1,))
         f.append(c1.fetchall())
 
     if not f:
