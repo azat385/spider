@@ -587,6 +587,13 @@ almetSettings = [form_std_settings(almet_data[0], modbus_set=(5, 3, 110), ),
                  form_std_settings(almet_data[3], modbus_set=(5, 3, 300), ),
                  ]
 
+grenadaSettings = [ form_std_settings(pixel_std_map[0], modbus_set=(5, 3, 960), prepend_name="PV1_"),
+                    #form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 1065), prepend_name="PV1_"),
+                    form_std_settings(pixel_std_map[0], modbus_set=(5, 3, 1960), prepend_name="PV2_"),
+                    #form_std_settings(pixel_std_map[1], modbus_set=(4, 3, 2065), prepend_name="PV2_"),
+                ]
+
+
 bolgarSettings = []
 common_data_name = {
     'morg': morgSettings,
@@ -598,6 +605,7 @@ common_data_name = {
     'sterlitamak': sterlitamakSettings,
     'mavl': mavlSettings,
     'almet': almetSettings,
+    'grenada': grenadaSettings,
 }
 
 common_data_imei = {
@@ -610,6 +618,7 @@ common_data_imei = {
     '353173067393130': 'sterlitamak',
     '351513052870364': 'mavl',
     '351513054389629': 'almet',
+    '353173063486193': 'grenada',
 }
 
 if __name__ == '__main__':
