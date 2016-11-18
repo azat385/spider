@@ -718,11 +718,11 @@ grenada_map = grenada_map + grenada_additional
 #print grenada_map[2]
 
 grenadaSettings = [ form_std_settings(grenada_map[0], modbus_set=(5, 3, 960), prepend_name="PV1_"),
-                    form_std_settings(grenada_map[1], modbus_set=(4, 3, 1065), prepend_name="PV1_"),
-                    form_std_settings(grenada_map[2], modbus_set=(4, 3, 1135), prepend_name="PV1_"),
+                    form_std_settings(grenada_map[1], modbus_set=(5, 3, 1065), prepend_name="PV1_"),
+                    form_std_settings(grenada_map[2], modbus_set=(5, 3, 1135), prepend_name="PV1_"),
                     form_std_settings(grenada_map[0], modbus_set=(5, 3, 1960), prepend_name="PV2_"),
-                    form_std_settings(grenada_map[1], modbus_set=(4, 3, 2065), prepend_name="PV2_"),
-                    form_std_settings(grenada_map[2], modbus_set=(4, 3, 2135), prepend_name="PV2_"),
+                    form_std_settings(grenada_map[1], modbus_set=(5, 3, 2065), prepend_name="PV2_"),
+                    form_std_settings(grenada_map[2], modbus_set=(5, 3, 2135), prepend_name="PV2_"),
                 ]
 
 
