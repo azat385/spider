@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from mcStat import getKeys
-mcKeyLimit = 1000
+mcKeyLimit = 10000
 
 import memcache
 mc = memcache.Client(['127.0.0.1:11211'], debug=0)
