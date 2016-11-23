@@ -20,7 +20,7 @@ class myArgs():
     delay = 5
     port = 14385
     delayBeforeDropConnection = 300
-    mc_delay_online = 600
+    mc_delay_online = 0
 
 
 

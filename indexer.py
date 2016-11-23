@@ -3,7 +3,7 @@
 
 #base_path = "html/"
 #from plotHTML import base_path
-base_path = "/home/ubuntu/spider/html/"
+base_path = "/data/spider_html/"
 file_name = "index.html"
 file_name_sans_ext = file_name.split(".")[0]
 
