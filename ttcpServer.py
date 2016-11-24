@@ -80,6 +80,9 @@ def set_data_to_mc(key_name, variable, time_out = 300):
     mc.set(key=key_name, val=var_pickle, time=time_out)
 
 
+def set_name_busy_list_to_mc(var):
+    set_data_to_mc(key_name="name_busy_list", variable=var, time_out=0)
+
 class getServerCommonData():
     #from initData import common_data
     #common_data=common_data
@@ -330,6 +333,7 @@ class SpiderProtocol(protocol.Protocol):
                     if not self.check_name_in_list():
                         log.msg("Add name {} to name list".format(self.name))
                         self.name_busy_list.append(self.name)
+                        set_name_busy_list_to_mc(var=self.name_busy_list)
                         self.allow_to_remove = True
                     else:
                         #reject connection
@@ -365,6 +369,7 @@ class SpiderProtocol(protocol.Protocol):
                 if self.check_name_in_list():
                     log.msg("Remove name {} from name list".format(self.name))
                     self.name_busy_list.remove(self.name)
+                    set_name_busy_list_to_mc(var=self.name_busy_list)
         self.cancel_planned_request()
         self.cancel_timeout_drop()
 
