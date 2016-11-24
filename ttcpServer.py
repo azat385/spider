@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# start in windows python d:\Python27\Scripts\twistd.py -ny ttcpServer.py
+# start in windows: python d:\Python27\Scripts\twistd.py -ny ttcpServer.py
 # sudo kill -TERM $(sudo cat gsm.pid)
 # sudo python /usr/local/bin/twistd -y ttcpServer.py --pidfile=gsm.pid --uid=0
 
