@@ -728,7 +728,7 @@ grenadaSettings = [ form_std_settings(grenada_map[0], modbus_set=(5, 3,  960), p
 gorka_data = (
     {'id': 1 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Temp",},
     {'id': 2 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Temp_4s",},
-    {'id': 3 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Hunid",},
+    {'id': 3 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Humid",},
     {'id': 4 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Humid_4s",},
     {'id': 5 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Dew_point",},
     {'id': 6 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Abs_humid",},
