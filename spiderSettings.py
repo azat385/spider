@@ -725,6 +725,18 @@ grenadaSettings = [ form_std_settings(grenada_map[0], modbus_set=(5, 3,  960), p
                     form_std_settings(grenada_map[2], modbus_set=(5, 3, 2135), prepend_name="PV2_"),
                 ]
 
+gorka_data = (
+    {'id': 1 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Temp",},
+    {'id': 2 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Temp_4s",},
+    {'id': 3 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Hunid",},
+    {'id': 4 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Humid_4s",},
+    {'id': 5 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Dew_point",},
+    {'id': 6 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Abs_humid",},
+    {'id': 7 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Mix_ratio",},
+    {'id': 8 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Enthalpy",},
+)
+gorkaSettings = [form_std_settings(gorka_data, modbus_set=(2, 4, 1), ), ]
+
 
 bolgarSettings = []
 common_data_name = {
@@ -738,6 +750,7 @@ common_data_name = {
     'mavl': mavlSettings,
     'almet': almetSettings,
     'grenada': grenadaSettings,
+    'gorka': gorkaSettings,
 }
 
 common_data_imei = {
@@ -751,6 +764,7 @@ common_data_imei = {
     '351513052870364': 'mavl',
     '351513054389629': 'almet',
     '353173063486193': 'grenada',
+    '355234054969205': 'gorka',
 }
 
 if __name__ == '__main__':
