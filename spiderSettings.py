@@ -735,7 +735,7 @@ gorka_data = (
     {'id': 7 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Mix_ratio",},
     {'id': 8 , 'type': int16,	'saveTrigger': onChange,	'saveAttr': (3, 5,),		'name': "Enthalpy",},
 )
-gorkaSettings = [form_std_settings(gorka_data, modbus_set=(2, 4, 1), ), ]
+gorkaSettings = [form_std_settings(gorka_data, modbus_set=(2, 4, 0), ), ]
 
 
 bolgarSettings = []
