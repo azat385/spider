@@ -30,9 +30,10 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         s.send_response(200)
         s.send_header("Content-type", "text/html")
         s.end_headers()
-        #s.wfile.write("<p>You accessed path: {}</p>".format(s.path) )
-        #print(str(s.path).decode('cp1251'))
-        #s.wfile.write("<p>You accessed path: %s</p>" % 'на русском')
+        if DEBUG:
+            s.wfile.write("<p>You accessed path: {}</p>".format(s.path) )
+            #print(str(s.path).decode('cp1251'))
+            #s.wfile.write("<p>You accessed path: %s</p>" % 'на русском')
         txt = allText(path=s.path)
         if DEBUG:
             print txt
@@ -48,14 +49,14 @@ def allText(path='/almet'):
     from mako.template import Template
     name1 = "Юбилейный".decode('utf-8')
     mytemplate = Template(filename='base.html', input_encoding='utf-8')
-    commonData1, textSmall, textBig = getData()
+    commonData1, textSmall, textBig = getData(objName=path)
     text = mytemplate.render(commonData=commonData1, rowsS=textSmall, rowsB=textBig)
     if DEBUG:
         print text
     return text.encode('utf-8')
 
 
-def getData():
+def getData(objName='almet'):
     import memcache
     mc = memcache.Client(['127.0.0.1:11211'], debug=0)
 
@@ -64,7 +65,9 @@ def getData():
     with open("data.yaml", 'r') as ymlfile:
         cfg = yaml.load(ymlfile)
 
-    objName = 'almet'
+    if not cfg.has_key(objName):
+        objName = 'almet'
+
     almet_common = cfg[objName]['common']
 
     def getMCdata(almet_list):
@@ -106,7 +109,7 @@ if __name__ == '__main__':
 
     if DEBUG:
         allText()
-        exit()
+        #exit()
 
     server_class = BaseHTTPServer.HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), MyHandler)
