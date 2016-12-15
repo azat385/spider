@@ -70,6 +70,12 @@ def getData(objName='almet'):
 
     almet_common = cfg[objName]['common']
 
+    if not cfg[objName].has_key('koef'):
+        koef = 1.0
+    else:
+        koef = cfg[objName]['koef']
+
+
     def getMCdata(almet_list):
         arc_prefix = "online_"
         almet_col = [row[0] for row in almet_list]
@@ -87,7 +93,7 @@ def getData(objName='almet'):
                     pos = almet_col.index(key)
                     v = value.split(";")
                     v_float, v_time = v
-                    v_float = round(float(v_float), 2) #val = float("{0:.2f}".format(float(v[0])))
+                    v_float = round(float(v_float)*koef, 2) #val = float("{0:.2f}".format(float(v[0])))
                     v_time_full = v_time
                     v_time = datetime.strptime(v_time,"%Y-%m-%d %H:%M:%S.%f")
                     v_time_str = humanize.naturaltime(datetime.now() - v_time)
