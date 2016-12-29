@@ -473,8 +473,29 @@ for n in range(1, 22):
     sterlitamakSettings.append(form_std_settings(pixel_std_map[0], modbus_set=(4, 3, sterlitamakInit + (n - 1) * sterlitamakStep), prepend_name="RT{}_".format(n)))
     sterlitamakSettings.append(form_std_settings(pixel_std_map[1], modbus_set=(4, 3, sterlitamakInit + (n - 1) * sterlitamakStep + 105), prepend_name="RT{}_".format(n)))
 
+#41122
+mavl_additional = (
+    (
+        {'id':  99, 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name': "UT1 h",	},
+        {'id': 100, 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name': "UT1 t",	},
+        {'id': 101, 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name': "UT2 h",	},
+        {'id': 102, 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name': "UT2 t",	},
+        {'id': 103, 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name': "UT3 h",	},
+        {'id': 104, 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name': "UT3 t",	},
+        {'id': 105, 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name': "UT4 h",	},
+        {'id': 106, 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name': "UT4 t",	},
+        {'id': 107, 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name': "UT5 h",	},
+        {'id': 108, 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name': "UT5 t",	},
+        {'id': 109, 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name': "UT1 H",	},
+        {'id': 110, 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name': "UT2 H",	},
+        {'id': 111, 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name': "UT3 H",	},
+        {'id': 112, 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name': "UT4 H",	},
+        {'id': 113, 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name': "UT5 H",	},
+    ),
+)
 mavlSettings = [form_std_settings(pixel_std_map[0], modbus_set=(11, 3, 960), prepend_name="PV11_"),
-                form_std_settings(pixel_std_map[1], modbus_set=(11, 3, 1065), prepend_name="PV11_")
+                form_std_settings(pixel_std_map[1], modbus_set=(11, 3, 1065), prepend_name="PV11_"),
+				form_std_settings(mavl_additional[0], modbus_set=(11, 3, 1122), prepend_name="PV11_"),
                 ]
 
 almet_data = (
