@@ -49,8 +49,8 @@ def allText(path='/almet'):
     from mako.template import Template
     name1 = "Юбилейный".decode('utf-8')
     mytemplate = Template(filename='base.html', input_encoding='utf-8')
-    commonData1, textSmall, textBig = getData(objName=path)
-    text = mytemplate.render(commonData=commonData1, rowsS=textSmall, rowsB=textBig)
+    commonData1, listDictExpanded, listDictCollapsed = getData(objName=path)
+    text = mytemplate.render(commonData=commonData1, ldExpanded=listDictExpanded, ldCollapsed=listDictCollapsed)
     if DEBUG:
         print text
     return text.encode('utf-8')
@@ -58,8 +58,14 @@ def allText(path='/almet'):
 
 def getData(objName='almet'):
     import memcache
-    mc = memcache.Client(['127.0.0.1:11211'], debug=0)
-
+    
+    if DEBUG:
+        host = '52.29.5.118:14212'
+    else:
+        host = '127.0.0.1:11211'
+        
+    mc = memcache.Client([host], debug=0)
+    
     import yaml
 
     with open("data.yaml", 'r') as ymlfile:
@@ -69,12 +75,6 @@ def getData(objName='almet'):
         objName = 'almet'
 
     almet_common = cfg[objName]['common']
-
-    if not cfg[objName].has_key('koef'):
-        koef = 1.0
-    else:
-        koef = cfg[objName]['koef']
-
 
     def getMCdata(almet_list):
         arc_prefix = "online_"
@@ -105,17 +105,28 @@ def getData(objName='almet'):
         if DEBUG:
             print resultList
         return resultList
+        
+    resultExpandTableList = []
+    resultCollapsedTableList = []
+    for table in cfg[objName]['tables']:
+        if not table.has_key('koef'):
+            koef = 1.0
+        else:
+            koef = table['koef']
+        resDict = {'caption':table['caption'], 'data':getMCdata(almet_list=table['data'])}
+        if table['expand']:
+            resultExpandTableList.append(resDict)
+        else:
+            resultCollapsedTableList.append(resDict)
 
-    resultListSmall = getMCdata(almet_list=cfg[objName]['small'])
-    resultListBig = getMCdata(almet_list=cfg[objName]['big'])
-
-    return almet_common, resultListSmall, resultListBig
+    return almet_common, resultExpandTableList, resultCollapsedTableList
 
 if __name__ == '__main__':
 
     if DEBUG:
-        allText()
-        #exit()
+        print getData(objName="mavl")
+        print allText("/mavl")
+        exit()
 
     server_class = BaseHTTPServer.HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), MyHandler)
