@@ -139,7 +139,6 @@ settings = [
    #form_dict(name="test.PV2_"),
    form_dict(name="mavl.PV11_"),
    form_dict(name="almet.", data_list=almet_list),
-   form_dict(name="mavl.PV11_"),
 ]
 
 p_all = []
@@ -162,14 +161,14 @@ for ss in settings:
     for p1 in p:
         # get only needed p1 from np_rows
         f1 = np_rows[np_rows[:, 0] == p1][:, 1:]
+        # check the len of result array
+        if not f1.size:
+            continue
         x1 = f1[:,0]
         y1 = f1[:,1]
         #for f2 in f1:
             #x1.append(f2[0])
             #y1.append(datetime.strptime(f2[1],"%Y-%m-%d %H:%M:%S.%f"))
-        #>>> lst=[[1,2,3],[11,12,13],[21,22,23]]
-        #>>> zip(*lst)[0]
-        #(1, 11, 21)
         cool_str_in_graph = p1.replace(ss['tag_prefix'], "")
         cool_str_in_graph = cool_str_in_graph.replace("SCo_", "")
         trace = dict(name=cool_str_in_graph, y=x1, x=y1)
@@ -182,6 +181,7 @@ for ss in settings:
     import os
     if not os.path.isdir(full_path):
         os.makedirs(full_path)
+    print '{}index.html is creating'.format(full_path)
     plot(data, filename='{}index.html'.format(full_path), auto_open=False, show_link=False)
 
 
