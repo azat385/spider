@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import sqlite3
-from datetime import datetime
+import numpy as np
+#from datetime import datetime
 
 base_path = "/data/spider_html/"
 db_name = '/home/ubuntu/spider/test1.db'
@@ -120,35 +121,42 @@ def form_dict(name="morg.", prefix=arc_prefix, data_list=std_pxl_arc):
     return d
 
 settings = [
-    form_dict(name="morg.", data_list=p),
-    form_dict(name="chuykova."),
-    form_dict(name="aktanish.PP1_", data_list=add_aktanish_PP1_arc),
-    form_dict(name="aktanish.PP2_"),
-    form_dict(name="aktanish.PP3_"),
-    form_dict(name="aktanish.PP4_"),
-    form_dict(name="fedos.", data_list=f),
-    form_dict(name="test.PV1_"),
-    form_dict(name="test.PV2_"),
-    form_dict(name="mavl.PV11_"),
-    form_dict(name="almet.", data_list=almet_list)
+   form_dict(name="morg.", data_list=p),
+   form_dict(name="chuykova."),
+   form_dict(name="aktanish.PP1_", data_list=add_aktanish_PP1_arc),
+   form_dict(name="aktanish.PP2_"),
+   form_dict(name="aktanish.PP3_"),
+   form_dict(name="aktanish.PP4_"),
+   #form_dict(name="fedos.", data_list=f),
+   #form_dict(name="test.PV1_"),
+   #form_dict(name="test.PV2_"),
+   form_dict(name="mavl.PV11_"),
+   form_dict(name="almet.", data_list=almet_list),
+   form_dict(name="mavl.PV11_"),
 ]
+
 
 for ss in settings:
     p = ss['data']
     f = []
-    for p1 in p:
-        c1 = conn.execute("SELECT  VALUE, STIME FROM RAWDATA WHERE NAME=? AND (STIME>= datetime('now','-2 day')) ORDER BY ID DESC",(p1,))
-        f.append(c1.fetchall())
-
-    if not f:
+    print p
+    f = conn.execute("""SELECT  NAME, VALUE, STIME
+        FROM RAWDATA
+        WHERE NAME in ({}) AND (STIME>= datetime('now','-8 day'))
+        ORDER BY NAME DESC""".format(",".join(["?"]*len(p))),(p))
+    rows = f.fetchall()
+    if not rows:
         continue
+    np_rows = np.array(rows)
+
     data = []
-    for p1, f1 in zip(p, f):
-        x1 = []
-        y1 = []
-        for f2 in f1:
-            x1.append(f2[0])
-            y1.append(datetime.strptime(f2[1],"%Y-%m-%d %H:%M:%S.%f"))
+    for p1 in p:
+        f1 = np_rows[np_rows[:, 0] == p1][:, 1:]
+        x1 = f1[:,0]
+        y1 = f1[:,1]
+        #for f2 in f1:
+            #x1.append(f2[0])
+            #y1.append(datetime.strptime(f2[1],"%Y-%m-%d %H:%M:%S.%f"))
         #>>> lst=[[1,2,3],[11,12,13],[21,22,23]]
         #>>> zip(*lst)[0]
         #(1, 11, 21)
