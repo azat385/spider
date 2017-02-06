@@ -5,8 +5,15 @@ import sqlite3
 import numpy as np
 #from datetime import datetime
 
-base_path = "/data/spider_html/"
-db_name = '/home/ubuntu/spider/test1.db'
+days = 2
+DEBUG = False
+
+if DEBUG:
+    base_path = "/html/"
+    db_name = 'test1.db.20170130'
+else:
+    base_path = "/data/spider_html/"
+    db_name = '/home/ubuntu/spider/test1.db'
 
 conn = sqlite3.connect(db_name)
 conn.text_factory = str
@@ -135,22 +142,25 @@ settings = [
    form_dict(name="mavl.PV11_"),
 ]
 
+p_all = []
+for ss in settings:
+    p_all += ss['data']
+
+f = []
+print p_all
+f = conn.execute("""SELECT  NAME, VALUE, STIME
+    FROM RAWDATA
+    WHERE NAME in ({}) AND (STIME>= datetime('now','-{} day'))
+    ORDER BY NAME DESC""".format(",".join(["?"]*len(p_all)),days),(p_all))
+rows = f.fetchall()
+np_rows = np.array(rows)
+conn.close()
 
 for ss in settings:
     p = ss['data']
-    f = []
-    print p
-    f = conn.execute("""SELECT  NAME, VALUE, STIME
-        FROM RAWDATA
-        WHERE NAME in ({}) AND (STIME>= datetime('now','-8 day'))
-        ORDER BY NAME DESC""".format(",".join(["?"]*len(p))),(p))
-    rows = f.fetchall()
-    if not rows:
-        continue
-    np_rows = np.array(rows)
-
     data = []
     for p1 in p:
+        # get only needed p1 from np_rows
         f1 = np_rows[np_rows[:, 0] == p1][:, 1:]
         x1 = f1[:,0]
         y1 = f1[:,1]
@@ -174,7 +184,6 @@ for ss in settings:
         os.makedirs(full_path)
     plot(data, filename='{}index.html'.format(full_path), auto_open=False, show_link=False)
 
-conn.close()
 
 if __name__ == '__main__':
     pass
