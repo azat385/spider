@@ -5,7 +5,7 @@ import sqlite3
 import numpy as np
 #from datetime import datetime
 
-days = 2
+days = 1
 DEBUG = False
 
 if DEBUG:

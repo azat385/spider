@@ -63,7 +63,7 @@ def getData(objName='almet'):
         host = '52.29.5.118:14212'
     else:
         host = '127.0.0.1:11211'
-        
+
     mc = memcache.Client([host], debug=0)
     
     import yaml
@@ -126,7 +126,7 @@ if __name__ == '__main__':
     if DEBUG:
         print getData(objName="mavl")
         print allText("/mavl")
-        exit()
+        #exit()
 
     server_class = BaseHTTPServer.HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), MyHandler)
