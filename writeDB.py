@@ -64,7 +64,8 @@ if __name__ == '__main__':
     #create_table()
     #write_data_to_db()
     #exit()
-    db_name = 'test1.db'
+    # db_name = 'test1.db'
+    db_name = '/data/spider_log/test1.db'
     import sqlite3
     #conn = sqlite3.connect(db_name)
     from time import sleep

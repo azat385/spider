@@ -13,7 +13,8 @@ if DEBUG:
     db_name = 'test1.db.20170130'
 else:
     base_path = "/data/spider_html/"
-    db_name = '/home/ubuntu/spider/test1.db'
+    # db_name = '/home/ubuntu/spider/test1.db'
+    db_name = '/data/spider_log/test1.db'
 
 conn = sqlite3.connect(db_name)
 conn.text_factory = str
