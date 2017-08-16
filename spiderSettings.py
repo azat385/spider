@@ -784,7 +784,7 @@ common_data_name = {
     'almet': almetSettings,
     'grenada': grenadaSettings,
     'gorka': gorkaSettings,
-	'rotorTest': rotorSettings,
+	'rotor': rotorSettings,
 }
 
 common_data_imei = {
