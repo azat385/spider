@@ -767,6 +767,9 @@ gorka_data = (
 )
 gorkaSettings = [form_std_settings(gorka_data, modbus_set=(2, 4, 0), ), ]
 
+rotorSettings = [form_std_settings(pixel_std_map[0], modbus_set=(1, 3, 40960), ),
+                 form_std_settings(pixel_std_map[1], modbus_set=(1, 3, 41065), )
+                ]
 
 bolgarSettings = []
 common_data_name = {
@@ -781,6 +784,7 @@ common_data_name = {
     'almet': almetSettings,
     'grenada': grenadaSettings,
     'gorka': gorkaSettings,
+	'rotorTest': rotorSettings,
 }
 
 common_data_imei = {
@@ -795,6 +799,7 @@ common_data_imei = {
     '351513054389629': 'almet',
     '353173063486193': 'grenada',
     '355234054969205': 'gorka',
+	'355234057266500': 'rotor',
 }
 
 if __name__ == '__main__':
