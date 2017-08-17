@@ -799,8 +799,8 @@ common_data_imei = {
     '351513054389629': 'almet',
     '353173063486193': 'grenada',
     '355234054969205': 'gorka',
-	'355234057042836': 'rotor', #fake for tests
-	#'355234057266500': 'rotor',
+	#'355234057042836': 'rotor', #fake for tests
+	'355234057266500': 'rotor',
 }
 
 if __name__ == '__main__':
