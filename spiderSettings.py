@@ -767,8 +767,41 @@ gorka_data = (
 )
 gorkaSettings = [form_std_settings(gorka_data, modbus_set=(2, 4, 0), ), ]
 
-rotorSettings = [form_std_settings(pixel_std_map[0], modbus_set=(1, 3, 40960), ),
-                 form_std_settings(pixel_std_map[1], modbus_set=(1, 3, 41065), )
+rotor_map = (
+    (
+        {'id': 1 , 'type': int32,	'saveTrigger': onChange, 'saveAttr': (0.9, 60,),	'name':"SCo_Код (Аварии)",	},
+        {'id': 2 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.9, 60,),	'name':"SCo_Код (Состояние)",	},
+        {'id': 3 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCo_t_(наружная)",	},
+        {'id': 4 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCo_t_(канала)",	},
+        {'id': 5 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCo_t_(после_ротора_приток)",	},
+        {'id': 6 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCo_t_(помещения_до_ротора_вытяжка)",	},
+        {'id': 7 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCo_t_(выброса_после_ротора_вытяжка)",	},
+        {'id': 8 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCo_Расход_Приток",	},
+        {'id': 9 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.1, 60,),'name':"SCo_Уставка_t",	},
+        {'id': 10, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_ВП",	},
+        {'id': 11, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_ВВ",	},
+        {'id': 12, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_Status_ЭКал",	},
+        {'id': 13, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%ЭКал",	},
+        {'id': 14, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_СтЭКал",	},
+        {'id': 15, 'type': int16,	'saveTrigger': doNotSave,	'name':"SCo_%Рекуп",	},
+        {'id': 16, 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.9, 60,),	'name':"SCo_%ВП",	},
+        {'id': 17, 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.9, 60,),	'name':"SCo_%ВВ",	},
+        {'id': 18, 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCo_Давление_Па_приток",	},
+    ),
+    (
+        {'id': 1 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCo_Давление_Па_вытяжка",	},
+        {'id': 2 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCo_Расход_вытяжка",	},
+        {'id': 3 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCi_коэф",	},
+        {'id': 4 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCi_корр_Па",	},
+        {'id': 5 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCi_макс_Па)",	},
+        {'id': 6 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCi_мин_Па_тэн",	},
+        {'id': 7 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.1, 5,), 'name':"SCo_ain5",	},
+        {'id': 8 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.1, 5,), 'name':"SCo_bits",	},
+    ),
+)
+
+rotorSettings = [form_std_settings(rotor_map[0], modbus_set=(1, 3, 40960), ),
+                 form_std_settings(rotor_map[1], modbus_set=(2, 3, 40960), )
                 ]
 
 bolgarSettings = []
