@@ -115,6 +115,19 @@ almet_list = [
 ]
 arc_prefix = "archive_"
 
+rotor_list = [
+    "SCo_t_(наружная)",
+    "SCo_t_(канала)",
+    "SCo_t_(после_ротора_приток)",
+    "SCo_t_(помещения_до_ротора_вытяжка)",
+    "SCo_t_(выброса_после_ротора_вытяжка)",
+    "SCo_Расход_Приток",
+    "SCo_Расход_вытяжка",
+    "SCo_%ВП",
+    "SCo_%ВВ",
+    "SCo_Давление_Па_приток",
+    "SCo_Давление_Па_вытяжка", 
+]
 
 def form_dict(name="morg.", prefix=arc_prefix, data_list=std_pxl_arc):
     dir_path = name.replace("_", "/")
@@ -129,17 +142,18 @@ def form_dict(name="morg.", prefix=arc_prefix, data_list=std_pxl_arc):
     return d
 
 settings = [
-   form_dict(name="morg.", data_list=p),
-   form_dict(name="chuykova."),
-   form_dict(name="aktanish.PP1_", data_list=add_aktanish_PP1_arc),
-   form_dict(name="aktanish.PP2_"),
-   form_dict(name="aktanish.PP3_"),
-   form_dict(name="aktanish.PP4_"),
-   #form_dict(name="fedos.", data_list=f),
-   #form_dict(name="test.PV1_"),
-   #form_dict(name="test.PV2_"),
-   form_dict(name="mavl.PV11_"),
-   form_dict(name="almet.", data_list=almet_list),
+    form_dict(name="morg.", data_list=p),
+    form_dict(name="chuykova."),
+    form_dict(name="aktanish.PP1_", data_list=add_aktanish_PP1_arc),
+    form_dict(name="aktanish.PP2_"),
+    form_dict(name="aktanish.PP3_"),
+    form_dict(name="aktanish.PP4_"),
+    #form_dict(name="fedos.", data_list=f),
+    #form_dict(name="test.PV1_"),
+    #form_dict(name="test.PV2_"),
+    form_dict(name="mavl.PV11_"),
+    form_dict(name="almet.", data_list=almet_list),
+    form_dict(name="rotor.", data_list=rotor_list),
 ]
 
 p_all = []
