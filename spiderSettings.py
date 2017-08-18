@@ -793,7 +793,7 @@ rotor_map = (
         {'id': 2 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCo_Расход_вытяжка",	},
         {'id': 3 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCi_коэф",	},
         {'id': 4 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCi_корр_Па",	},
-        {'id': 5 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCi_макс_Па)",	},
+        {'id': 5 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCi_макс_Па",	},
         {'id': 6 , 'type': flt32,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"SCi_мин_Па_тэн",	},
         {'id': 7 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.1, 5,), 'name':"SCo_ain5",	},
         {'id': 8 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.1, 5,), 'name':"SCo_bits",	},
