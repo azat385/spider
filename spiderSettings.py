@@ -798,10 +798,24 @@ rotor_map = (
         {'id': 7 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.1, 5,), 'name':"SCo_ain5",	},
         {'id': 8 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.1, 5,), 'name':"SCo_bits",	},
     ),
+        (
+        {'id': 1 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"Температура_4с",	},
+        {'id': 2 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"Температура_фильтр",	},
+        {'id': 3 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"Влажность_4с",	},
+        {'id': 4 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"Влажность_фильтр",	},
+        {'id': 5 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"Точка_росы",	},
+        {'id': 6 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.3, 5,),	'name':"Абсолютная_влажность",	},
+        {'id': 7 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.1, 5,), 'name':"Соотношение_массовое",	},
+        {'id': 8 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.1, 5,), 'name':"Энтальпия",	},
+    ),
 )
 
 rotorSettings = [form_std_settings(rotor_map[0], modbus_set=(1, 3, 40960), ),
-                 form_std_settings(rotor_map[1], modbus_set=(2, 3, 40960), )
+                 form_std_settings(rotor_map[1], modbus_set=(2, 3, 40960), ),
+                 form_std_settings(rotor_map[2], modbus_set=(4, 4, 1), prepend_name="UT1_"),
+                 form_std_settings(rotor_map[2], modbus_set=(5, 4, 1), prepend_name="UT2_"),
+                 form_std_settings(rotor_map[2], modbus_set=(6, 4, 1), prepend_name="UT3_"),
+                 form_std_settings(rotor_map[2], modbus_set=(7, 4, 1), prepend_name="UT4_"),
                 ]
 
 bolgarSettings = []
