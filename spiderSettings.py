@@ -817,6 +817,19 @@ rotorSettings = [form_std_settings(rotor_map[0], modbus_set=(1, 3, 40960), ),
                  form_std_settings(rotor_map[2], modbus_set=(6, 4, 0), prepend_name="UT3_"),
                  form_std_settings(rotor_map[2], modbus_set=(7, 4, 0), prepend_name="UT4_"),
                 ]
+agriz_map = (
+    (
+        {'id': 1 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.9, 60,),	'name':"Node_0",	},
+        {'id': 2 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.9, 60,),	'name':"Node_1",	},
+        {'id': 3 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.9, 60,),    'name':"Node_2",	},
+        {'id': 4 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.9, 60,),    'name':"Node_3",	},
+        {'id': 5 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.9, 60,),    'name':"Node_4",	},
+        {'id': 6 , 'type': int16,	'saveTrigger': onChange, 'saveAttr': (0.9, 60,),    'name':"Node_5",	},
+    ),
+)
+
+
+agrizSettings = [form_std_settings(agriz_map[0], modbus_set=(1, 3, 9728), ),]
 
 bolgarSettings = []
 common_data_name = {
@@ -832,6 +845,7 @@ common_data_name = {
     'grenada': grenadaSettings,
     'gorka': gorkaSettings,
 	'rotor': rotorSettings,
+    'agriz': agrizSettings,
 }
 
 common_data_imei = {
@@ -848,6 +862,7 @@ common_data_imei = {
     '355234054969205': 'gorka',
 	#'355234057042836': 'rotor', #fake for tests
 	'355234057266500': 'rotor',
+    '355234057035194': 'agriz',
 }
 
 if __name__ == '__main__':
