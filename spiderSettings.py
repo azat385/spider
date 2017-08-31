@@ -829,7 +829,7 @@ agriz_map = (
 )
 
 
-agrizSettings = [form_std_settings(agriz_map[0], modbus_set=(1, 3, 9728), ),]
+agrizSettings = [form_std_settings(agriz_map[0], modbus_set=(1, 3, 9727), ),]
 
 bolgarSettings = []
 common_data_name = {
