@@ -815,7 +815,7 @@ rotorSettings = [form_std_settings(rotor_map[0], modbus_set=(1, 3, 40960), ),
                  form_std_settings(rotor_map[2], modbus_set=(4, 4, 0), prepend_name="UT1_"),
                  form_std_settings(rotor_map[2], modbus_set=(5, 4, 0), prepend_name="UT2_"),
                  form_std_settings(rotor_map[2], modbus_set=(6, 4, 0), prepend_name="UT3_"),
-                 form_std_settings(rotor_map[2], modbus_set=(7, 4, 0), prepend_name="UT4_"),
+                #  form_std_settings(rotor_map[2], modbus_set=(7, 4, 0), prepend_name="UT4_"),
                 ]
 agriz_map = (
     (
